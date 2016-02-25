@@ -1,0 +1,5 @@
+Golnaz and Tony: Classifying proteins as secreted or not secreted
+Signal sequences, Types of secretion methods: bio side Sam, lab side Phil, computational methods for predicting localization, mispredictions Shams and Rachelle 
+motif based search tools: Ben
+Gene finding methods: Matt + Jasleen (biological gene finding methods, and splicing). Also Gene predictions (and mis-predictions). Start site is not necessarily AUG in bacteria!!
+Error (precision/recall): Prasath!
