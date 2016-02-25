@@ -66,22 +66,22 @@ Tumour suppressor: When activated, suppress excess growth. Inactivation leads to
 
 #Questions
 At the level of different mutation types, do these happen with equal probabilities at different regions of the genome? Does that impact our ability to read the genome and interpret the mutations? 3D structure of chromosomes, chromosomal packaging? 
-i) Is the local frequency of different types of single mutations uniform and random at different regions of the genome? Patterns of mutations, signatures. **Jasleen**
-ii) Is the local frequency of different types of Structural Alterations unifrom and random at different regions of the genome? **Matt**
-iii) How do we get simple somatic mutations (point + indels) (from WES of tumour + germline)? - mechanism of detection, algorithms, tools (examples) **Jasleen**
-iv) What is the average mutation rate in different cancers, how does that change? **Rachelle**
-v) Describing all the structural alterations in greater detail (mechanisms for acquisition, and what they can result in in the cell, their relevance in cancer, what can assembly get you). **Prasath**
-vi) Gain and loss of genetic material (CNVs) - mechanism of detection, algorithms, tools (examples) **Golnaz**
-vii) How can RNA-Seq data be combined with somatic genetic data to identify potential cis-acting mutations? **Tony**
-viii) Bisulfite sequencing to identify methylation in tumour suppressors - are there drugs that alter the epigenome? Reversible silencing of tumour suppressors in the epigenome. **Phil** 
-ix) Algorithms that exist to determine frequently mutated genes? **Ben**
-x) Algorithms that exist to determine frequently copy number amplified regions (CNVs)? **Matt**
-xi) Fusion transcripts detection using RNA-Seq data **Sam** 
-- *Fusion transcript prediction from genome can be restricted by - translocation not really translating into a functional product, or translocation of two genes that are not expressed ever in this cell type anyways*
-xii) Immunotherapy and cancer - cancer vaccines. What goes into understanding what information is needed (non-self antigens) to generate such vaccines. **Shams** 
-xiii) Databases of genetic variations that exist already - for SNVs, SNPs, somatic variations, and how they can be used for prioritization of variants and drug discovery **Respective mutation people refer to answer this question for their section**
-xiv) Existing driver mutations targetable with existing drugs, certain cancers more amenable to drug targeting due to low mutation burden **Rachelle** 
+i) Is the local frequency of different types of single mutations uniform and random at different regions of the genome? Patterns of mutations, signatures. **Jasleen**  
+ii) Is the local frequency of different types of Structural Alterations unifrom and random at different regions of the genome? **Matt**  
+iii) How do we get simple somatic mutations (point + indels) (from WES of tumour + germline)? - mechanism of detection, algorithms, tools (examples) **Jasleen**  
+iv) What is the average mutation rate in different cancers, how does that change? **Rachelle**  
+v) Describing all the structural alterations in greater detail (mechanisms for acquisition, and what they can result in in the cell, their relevance in cancer, what can assembly get you). **Prasath**  
+vi) Gain and loss of genetic material (CNVs) - mechanism of detection, algorithms, tools (examples) **Golnaz**  
+vii) How can RNA-Seq data be combined with somatic genetic data to identify potential cis-acting mutations? **Tony**  
+viii) Bisulfite sequencing to identify methylation in tumour suppressors - are there drugs that alter the epigenome? Reversible silencing of tumour suppressors in the epigenome. **Phil**   
+ix) Algorithms that exist to determine frequently mutated genes? **Ben**  
+x) Algorithms that exist to determine frequently copy number amplified regions (CNVs)? **Matt**  
+xi) Fusion transcripts detection using RNA-Seq data **Sam**   
+- *Fusion transcript prediction from genome can be restricted by - translocation not really translating into a functional product, or translocation of two genes that are not expressed ever in this cell type anyways*  
+xii) Immunotherapy and cancer - cancer vaccines. What goes into understanding what information is needed (non-self antigens) to generate such vaccines. **Shams**   
+xiii) Databases of genetic variations that exist already - for SNVs, SNPs, somatic variations, and how they can be used for prioritization of variants and drug discovery **Respective mutation people refer to answer this question for their section**  
+xiv) Existing driver mutations targetable with existing drugs, certain cancers more amenable to drug targeting due to low mutation burden **Rachelle**   
 
-*Keep in mind there is different information that you get from WGS vs WXS. Can you get CNVs from WXS, for example?*
+*Keep in mind there is different information that you get from WGS vs WXS. Can you get CNVs from WXS, for example?*  
 
-Mine: i), iii), xiii)
+Mine: i), iii), xiii)  
