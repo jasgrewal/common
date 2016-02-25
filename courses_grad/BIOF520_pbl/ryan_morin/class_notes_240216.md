@@ -78,6 +78,7 @@ ix) Algorithms that exist to determine frequently mutated genes? **Ben**
 x) Algorithms that exist to determine frequently copy number amplified regions (CNVs)? **Matt**  
 xi) Fusion transcripts detection using RNA-Seq data **Sam**   
 - *Fusion transcript prediction from genome can be restricted by - translocation not really translating into a functional product, or translocation of two genes that are not expressed ever in this cell type anyways*  
+
 xii) Immunotherapy and cancer - cancer vaccines. What goes into understanding what information is needed (non-self antigens) to generate such vaccines. **Shams**   
 xiii) Databases of genetic variations that exist already - for SNVs, SNPs, somatic variations, and how they can be used for prioritization of variants and drug discovery **Respective mutation people refer to answer this question for their section**  
 xiv) Existing driver mutations targetable with existing drugs, certain cancers more amenable to drug targeting due to low mutation burden **Rachelle**   
