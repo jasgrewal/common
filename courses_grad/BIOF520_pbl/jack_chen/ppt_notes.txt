@@ -1,0 +1,27 @@
+DNA methylation occurs at the cytosine bases of eukaryotic DNA, which are converted to 5'-methylcytosine by DNA methyltransferase enzymes. The altered cytosine residues are usually immediately adjacent to a Guanine nucleotide, leading to two methylated cytosine residues sitting diagonally to each other on opposing DNA strands. 
+
+aberrant CpG methylation is implicated in pathogenesis of human imprinting disorders and many cancers
+
+Staing using an immunofluorescently labeled antibody for 5-methylcytosine
+*IN MAMMALS, METHYLATION IS FOUND SPARSELY BUT GLOBALLY, distributed in definite CpG sequences throughout the entire genome, with the EXCEPTION OF CpG island*
+- mosaic pattern of methylation in invertebrates.
+- Plants are the most highly methylated eukorayotes (50% C's methylated). In Fungi, only repetitive DNA sequences are methylated. 
+- Some organisms like yeast and C. elegans are thought to have no methylated DNA at al (Paper 2008 Nature, the role of methylation in gene expression).
+Global pattern of methylation in mammals makes it difficult to determine whether methylation is targeted to certain gene sequences or is a default state.
+
+METHODS
+cytosine extension
+HPLC
+Bisulfite cloning
+Methylation sensitive restriction enzyme (locus specific, array based)
+
+Alignment from WGBS: wild card bisulfite sequencing aligners like BSMAP, RMAP operate by replacing cytosines in the sequenced reads with wild-card Y. 3-letter laligners like Bismark, BRAT, BS-Seeker convert C to T in both sequenced reads and the genome reference prior to performing the reads
+*Distinguishing between 5mC and 5hmC requires conversion of 5hmC to 5fC using oxidation step. 
+
+- SMRT seqeuncing can directly detect modified nucleotides by their unique polymerase kinetics without bisulfite conversion.
+- Amplification step introduced : Unable to detect any epigenetic modification of template DNA
+- Increased variability of intermediately methylated regions (can mitigate with sequencing depth). Can also be influenced by PCR bias towards unmethylated DNA (can use calibration strategies like standard curves of methylation controls).
+** PCR amplicons are sequenced with SMRT + CCS (circular consensus sequencing)
+
+OPTICAL MAPPING
+Single-molecule system, generated large restriction maps from single DNA molecules. Can pick up individual base changes too, but most adept at picking up larger structural variants. 
