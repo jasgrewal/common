@@ -1,0 +1,66 @@
+Problems/Issues in de novo assembly
+
+DeBruin Graph tips = mismatches, 'read errors'
+DBG concept developed before NGS
+- Pevzner et al 2001 (http://www.ncbi.nlm.nih.gov/pmc/articles/PMC55524/)
+
+Longer reads -> need less redundancy in sequences during assembly
+
+For error rate per base of 'p', possibility of getting a perfect read goes down geometrically as read length increases.
+
+Hamiltonian graph - every node seen once
+Eulerian graph - every edge seen once
+H & E problems are interchangeable, while H problems are NP complete and E resolvable. 
+
+DeBruin graph is oversimplification of the problem. Enter Unitig (unambiguous stretch of assembly)
+Ultimate goal of an assembly problem -> Perfect genome.
+
+contigs -> scaffolds -> linkage groups
+(Linkage Groups have linkage info between parts of a genome)
+
+Segmental duplications complicate assembly (as do LTRs, LINEs, SINES - genomic repetitive elements); 
+
+SDs are > 1kb sequences duplicated with 90% sequence identity.
+
+INDELS MATTER IN DENOVO ASSEMBLY!! Ex. heterozygous genome assembly (one allele has an indel, other one doesn't)
+	- Haplotype differences (SNVs, Indels)
+
+Computational complexity
+	- Memory / time / CPUs
+
+Genomic sources of contamination	
+	- Viral insertions (led to transposons)
+	- mitochondrial, plastid genomes
+
+
+GC content and contig constructio nand extension
+	- missing edges at certain subregions (lower coverage -> missing edges)
+	- lower your required overlap (one way)
+		- decreased specificity
+		- Maybe Validate with paired end reads (or BAC libraries)
+		- Maybe Validate with longer reads (Hybrid Assembly)
+
+Palindromic Sequences 
+	- Would create mobius strips in the graph (diff from bubbles and cycles)
+
+Homopolymers
+	- Illumina platform better with homopolymer runs than are PacBio and Nanopore
+	- 'RT' bit confounds expectation of refractory period in single molecule extension
+	- Voltage 'difference' recorded in Nanopore. Runs of same base = no voltage 'difference'
+	- Read length can be a confounder (homopolymer longer than read length)
+	- Estimate length of the structures
+	- Normally, if you have paired end data, and one end has, say, 3 base repeat, and the other has 25, then you put in a set number of Ns in between to reflect the expected length of the homopolymer in that region based on the differences in the counts from the paired end reads. So essentially a break in the assembly is the way to go at that point.
+
+Assembly paradigms
+	- DeBruin graph
+	- Overlap Layout Consensus (Linear approximations - SGA, Fermi)
+	- Greedy algorithms
+	- HGAP (non Hybrid)
+	- ALLPATHS (Hybrid)
+
+2 slides max, presentation per person.
+
+error correction (Internal error correction, filtering) - for Illumina and long read methods, for DE NOVO!
+
+
+
