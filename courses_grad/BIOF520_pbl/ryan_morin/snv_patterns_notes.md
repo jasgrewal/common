@@ -79,13 +79,18 @@
 
 #Databases for somatic variants (and application to drug discovery)   
 - [Several!](http://www.humgen.nl/SNP_databases.html)
+- [Nice summary](http://hmg.oxfordjournals.org/content/early/2013/08/19/hmg.ddt384.full.pdf)
 - dbSNP: short genetic variations database, maintained by NIH. Collection of common and rare small germline and somatic sequence variations. *Polymorphism repo*  
-- HGVBase (Human genome variation database): European (EBI-EMBL), 
+- ESP: Exome Sequencing Project
+- 1000 Genomes
+- **With these 3 dbs, the threshold to exclude a variant as pathogenic must be set high to reduce the risk of false negatives. This is because they don't have phenotypic info**
+- HGVBase (Human genome variation database): European (EBI-EMBL)
+- HGMD (Human Gene Mutation Database) - published variants present in genes known/suspected to be related to human disease. *Based on curated lit review*  
+- OMIM (inherited phenotypes + genes with selected variant info; most often mainly useful in understanding the connection of a specific gene to disease)
 - Human SNP database : Whitehead Institute
 - Human gene mutation database (UK): paid. SNPs causal for disease. 
 - dbGAP: 
-- ClinVar: 
-- Disease causing variation databases
+- ClinVar: Relationships of genomic variants to phenotypes. Similar to HGMD. Links to 1000 Genomes for variant submission analysis.
 - EVS or HapMap database **(to remove common variants, population specific variants)**
 
 *Correlation does not imply causation* 
