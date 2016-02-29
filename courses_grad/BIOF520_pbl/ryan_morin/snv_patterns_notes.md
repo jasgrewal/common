@@ -1,6 +1,9 @@
 #SNV distributions (Patterns of mutations, signatures)
 *Genome wide scale: influenced by cellular factors  
 *Locally: DNA sequence context (role of flanking sequence...albeit unclear)  
+- Transcription coupled repair: on trasncribed DNA. Affects mutation patterns (coding non-template strand has excess A->G vs T->C, and more C->T vs G->A transitions). In somatic tissue, transcribed DNA has a substantially lower mutation rate than non-transcribed DNA. 
+- Regions with open chromatin have lower mutation rates since DNase I hypersensitive sites have lower substitution rates than sequences surrounding them. 
+- Rate of point mutations goes up in regions surrounding indel mutations
 - Sequence context dependent mutagenesis at A-tracts and G-tracts (Bacolla et al, 2015)
 	- Are abundant in vertebrate genomes; mutations within the tracts occur more frequently than genome wide average, and increase with increasing tract length; 
 	- **Length instability is a hallmark of mismatch repair-deficiency in cancers** and occurs due to slippage during semiconservative DNA replication (repeat misalignment)  
