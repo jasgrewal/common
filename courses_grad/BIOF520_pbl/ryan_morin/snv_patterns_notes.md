@@ -33,7 +33,7 @@
 - 6 classes of somatic substitutions (4 distinct processes with different mutational signatures) based on time of development.
 	- Initially all mutations in the cell are due to activity of endogenous mutational process
 	
-	- {shown here}[http://www.sciencedirect.com/science?_ob=MiamiCaptionURL&_method=retrieve&_eid=1-s2.0-S0959437X13001639&_image=1-s2.0-S0959437X13001639-gr1.jpg&_cid=272031&_explode=defaultEXP_LIST&_idxType=defaultREF_WORK_INDEX_TYPE&_alpha=defaultALPHA&_ba=&_rdoc=1&_fmt=FULL&_issn=0959437X&_pii=S0959437X13001639&md5=8b5f571797af2e2e9f9c8c7ea8a8d3c6]
+	- [shown here]{http://www.sciencedirect.com/science?_ob=MiamiCaptionURL&_method=retrieve&_eid=1-s2.0-S0959437X13001639&_image=1-s2.0-S0959437X13001639-gr1.jpg&_cid=272031&_explode=defaultEXP_LIST&_idxType=defaultREF_WORK_INDEX_TYPE&_alpha=defaultALPHA&_ba=&_rdoc=1&_fmt=FULL&_issn=0959437X&_pii=S0959437X13001639&md5=8b5f571797af2e2e9f9c8c7ea8a8d3c6}
 	- The final cancer genome doesn't resemble any of the operative mutational signatures
 
 
