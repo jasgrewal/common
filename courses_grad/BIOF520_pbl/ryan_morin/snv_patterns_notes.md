@@ -23,6 +23,7 @@
 	- Signaure C>T transitions, C>A transversions  
 
 ##Signatures  
+- Alexandrov et al, 2013. A signature that contributes the large majority of somatic mutations in the tumour class.  
 - Alexandrov and Stratton, 2014  
 - Earliest one from UV radiation (C>T, CC>>TT)  
 - mutational signatures of carcinogens are left as 'evidence' in cancer genomes (TP53 studies in early 1990s)  
@@ -33,11 +34,66 @@
 - 6 classes of somatic substitutions (4 distinct processes with different mutational signatures) based on time of development.
 	- Initially all mutations in the cell are due to activity of endogenous mutational process
 	- [shown here](http://www.sciencedirect.com/science?_ob=MiamiCaptionURL&_method=retrieve&_eid=1-s2.0-S0959437X13001639&_image=1-s2.0-S0959437X13001639-gr1.jpg&_cid=272031&_explode=defaultEXP_LIST&_idxType=defaultREF_WORK_INDEX_TYPE&_alpha=defaultALPHA&_ba=&_rdoc=1&_fmt=FULL&_issn=0959437X&_pii=S0959437X13001639&md5=8b5f571797af2e2e9f9c8c7ea8a8d3c6)
-	- The final cancer genome doesn't resemble any of the operative mutational signatures
+	- The final cancer genome doesn't resemble any of the operative mutational signatures, and some of these processes can be triggered by lifestyle choices.
+	- 21 breast cancer genomes - highlighted distinct mutational signatures.
+		27 distinct mutational signatures. 22 validated by other approaches, 3 associated with technology specific sequencing artefacts, 2 remain unvalidated (Alexandrov et al, 2013, "Signatures of mutational processes in human cancer)  
+	- Mutational signature associated with 
+		- mutations in BRCA1/2 in breast, pancreatic. BRCA1/2 are implicated in homologous recombination based DNA ds break repair. So abrogation of their functions results in non-homologous end-joining mechs (uses microhomology to rejoin ds breaks at rearrangement junctions)  
+		- failure of DNA mismatch repair pathway in colorectal cancers
+		- hypermutation of immunoglobulin gene in CLL
+		- pol e mutations in uterine, colorectal cancers  
+		- Age of diagnosis  
+		- indels (microsatellite instability, defective DNA mismatch repair)  
+
+###Strand bias of mutational signatures
+- **Strand specificity** for a higher number of substs on the transcriber strand vs on the untranscribed strand can occur due to the transcription coupled component of nucleotide excision repair (NER) (ex. photodimers due to UV light exposure are repaired by NER and result in a higher number of C>T mutations on the untranscribed strand)  
+- Could be indicative of exon-specific repair processes active in the cell  
+- *Each of the cancer types has atleast 2 mutational signatures operative in it, whereas some have up to 6 distinct ones
+- APOBEC deaminases: 2 signatures (C>T, C>G at TpC sites), observed in 16 of 30 cancer types one of the most significant human carcinogens  
 
 
 #How are somatic variants called? (methods, tools)   
+- Strelka: 
+- VarScan: Uses mpileup
+- novoSNP:  
+- GATK: should not be used to call somatic variants from tumor/normal pairs.  
+	- Call SNPs on normal
+	- Call SNPs on tumour
+	- Subtract SNPs (N) from SNPs (T)
+	- **Wrong way!** Tool makes assumptions about allele freqs that are tuned for germline mutations, not somatic ones. Use MuTect instead. 
+- Mutect: Designed to detect somatic SNPs
+	- No longer ignore sequencing artifacts
+	- No germline VAF distribution assumptions
+		- Germline callers can bias you towards muts at 50/100% VAF
+	- Get rid of all germline mutations
+	
+
+- SNVMix (Goyaet et al, 2010): Independent tumour analysis
+
+##Notes on VAFs
+- Expect distribution on 0, 50, 100% for SNV fractions in normal tissue
+- Tumours have: normal admixtures (lowers VAFs), subclonal variants, CNVs
+	- Germline callers: are ploidy based, have genotyping algorithms (ex. GATK Unified Genotyper, does both variant calling and genotype calling) 
+	
+
 
 #Databases for somatic variants (and application to drug discovery)   
+- [Several!](http://www.humgen.nl/SNP_databases.html)
+- dbSNP: short genetic variations database, maintained by NIH. Collection of common and rare small germline and somatic sequence variations. *Polymorphism repo*  
+- HGVBase (Human genome variation database): European (EBI-EMBL), 
+- Human SNP database : Whitehead Institute
+- Human gene mutation database (UK): paid. SNPs causal for disease. 
+- dbGAP: 
+- ClinVar: 
+- Disease causing variation databases
+- EVS or HapMap database **(to remove common variants, population specific variants)**
 
+*Correlation does not imply causation* 
 
+##Databases associating variants to cancer target drugs
+- [DGIdb](http://dgidb.genome.wustl.edu)
+	- Sources like DrugBank, TTD (Therapeutic Target Database), PharmGKB)
+	- PharmGKB allows to get genotype-SNV linking directly to drug - license req
+	- Get about 3200 drugs? + 200 or so?
+ 	- [Connectivitiy map](http://www.broadinstitute.org/cmap/)
+		- Upload a signature consisting of a list of up and down genes. Returns drugs (/drugs + cell line combos) for which the same signature was observed in controlled expression expts.
