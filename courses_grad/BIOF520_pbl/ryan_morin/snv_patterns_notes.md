@@ -53,10 +53,24 @@
 
 
 #How are somatic variants called? (methods, tools)   
-- Strelka: 
-- VarScan: Uses mpileup
-- novoSNP:  
+**De novo mutation rate in humans is approx 1.1 x 10^-8 per haploid genome**  
+*Work with consensus calls from 2-3 variant callers*  
+Germline muts are inherited from the parents, are present in all cells of the body, may increase the susceptibility of a person to be diagnosed with cancer. **multiple cancer susceptibility loci**  Ex. KRAS mutations in exon 2 for colorectal cancers (treat with EGFR inhibitors)  
+***While early methods for genotype calling are based on fixed cut-offs, recent methods provide measures of statistical uncertainty when callign genotypes, and hence might improve the accuracy***  
+##Approaches to address non-diploid VAFs
+i. Use joint diploid genotype likelihoods for both samples (ex. SomaticSniper)  
+ii. Disregard such genotype structure and test whether a shared allele freq between the two samples can be rejected (VarScan)
+
+##Tools
+- Strelka:  Bayesian approach (tumour and normal allele freqs are treated as continuous values, normal sample = mix of diploid germline variation and noise; tumour = mixture of normal sample with somatic variation)
+- VarScan: Uses mpileup, can be used to call somatic mutations, CNVs, LOHs (t-n pairs), identify germline variants and *de novo* mutatioins. Step for variant filtering that removes likely FPs associated with common sequencing- and alignment- related artifacts.
+	- Variants called heuristically, and with statistical test based on supporting read count
+	- Meet user set criteria for coverage, number of reads, VAFs, and fisher's exact test p-value
+	- Artifacts due to alignment of relatively short (100 bp) read sequences to a ref genome. Alt local mis-alignment near indels. Alt reads with long runs of low base quality.
+	
+- novoSNP  
 - GATK: should not be used to call somatic variants from tumor/normal pairs.  
+	- Complete suite. Mainly calls germline variants. 
 	- Call SNPs on normal
 	- Call SNPs on tumour
 	- Subtract SNPs (N) from SNPs (T)
@@ -66,8 +80,6 @@
 	- No germline VAF distribution assumptions
 		- Germline callers can bias you towards muts at 50/100% VAF
 	- Get rid of all germline mutations
-	
-
 - SNVMix (Goyaet et al, 2010): Independent tumour analysis
 
 ##Notes on VAFs
@@ -75,8 +87,6 @@
 - Tumours have: normal admixtures (lowers VAFs), subclonal variants, CNVs
 	- Germline callers: are ploidy based, have genotyping algorithms (ex. GATK Unified Genotyper, does both variant calling and genotype calling) 
 	
-
-
 #Databases for somatic variants (and application to drug discovery)   
 - [Several!](http://www.humgen.nl/SNP_databases.html)
 - [Nice summary](http://hmg.oxfordjournals.org/content/early/2013/08/19/hmg.ddt384.full.pdf)
@@ -102,3 +112,7 @@
 	- Get about 3200 drugs? + 200 or so?
  	- [Connectivitiy map](http://www.broadinstitute.org/cmap/)
 		- Upload a signature consisting of a list of up and down genes. Returns drugs (/drugs + cell line combos) for which the same signature was observed in controlled expression expts.
+  
+## Annotation tools  
+VEP (Variant Effect Predictor): ENsembl's own functional annotation tool. Formerly SNP effect predictor.  
+SVA (Sequence Variant Analyzer): Annotate SNPs, INDELs, CNVs. Heavy hardware reqs, could not correctly annotate vcf files
