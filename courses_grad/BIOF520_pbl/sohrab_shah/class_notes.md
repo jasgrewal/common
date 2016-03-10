@@ -23,7 +23,9 @@
 - Threshold for difference
 - Cannot assume a single mutation - phenotype causation
 
-##Basis for drug resistance
+##Additional
+- Basis for drug resistance
+- How does RNA-Seq help in validating 
 
 #Discussion questions
 1. What types of genomic aberrations can be determined by WGS?  
