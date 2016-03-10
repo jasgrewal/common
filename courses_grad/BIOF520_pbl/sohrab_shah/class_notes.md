@@ -141,11 +141,11 @@ x. Epistatic evolution processes. Studying and detecting co-evolution in cancers
 - Infer clonal dynamics  
 
 ##Wet lab
-Type | response type | replicates | timepoints 
-Pre treatment | resistant | 3 | 4
-Pre treatment | sensitive | 3 | 4
-Post treatment | resistant | 3 | 4
-Post treatment | sensitive | 3 | 4
+Type | response type | replicates | timepoints   
+Pre treatment | resistant | 3 | 4  
+Pre treatment | sensitive | 3 | 4  
+Post treatment | resistant | 3 | 4  
+Post treatment | sensitive | 3 | 4  
   
 This model works with human or mice inputs.  
 
