@@ -128,6 +128,23 @@ vi. Modelling Fitness Lanscapes of cancer. Changing landscapes (treatment) **JG*
 vii. Time series data -> phylogeny **PP**  
 viii. Incorporating longitudinal patient studies (ex. to overcome model limitations) **BC**    
 ix. Treatment Response as a factor under study. Different variations in populations.  **RF**  
+x. Epistatic evolution processes. Studying and detecting co-evolution in cancers. What are detection methods for determining co-evolution processes in tumours? **TH**  
 
 *Think about targeted sequencing and how that fits into experimental design*  
 
+#Workflow
+##Computational
+- Shotgun sequencing
+- Single cell sequencing
+- Infer clonal dynamics  
+
+##Wet lab
+Type | response type | replicates | timepoints 
+Pre treatment | resistant | 3 | 4
+Pre treatment | sensitive | 3 | 4
+Post treatment | resistant | 3 | 4
+Post treatment | sensitive | 3 | 4
+  
+This model works with human or mice inputs.  
+
+Clustering of mutations  
