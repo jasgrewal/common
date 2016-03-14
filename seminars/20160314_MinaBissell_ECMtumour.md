@@ -26,9 +26,9 @@ How does it remember to be a mammary gland? Hmm....
 		- So if you restore tissue polarity in tumor cells with abnormal genomes, can they become phenotypically normal?  
 			- malignant cells have same receptors, but balance is off (5x EGFR, integrins, versus normal). *(Weaver et al, JCB, 1997)*  
 			- Use inhibitory therapy to revert to phenotypically normal. Note that reversion is itself reversible (**phenotype dominant over genotype**)  
-				- **Question: ** How does this affect the fitness landscape of these cells? Do some clones die out? What 'collapses in'? **   
+				- **Question: How does this affect the fitness landscape of these cells? Do some clones die out? What 'collapses in'? **   
 		- If you destroy basal membrane during development, you can lead to tumour development
-			- **_Follow up on papers published on this by Dr. Bissell _**  
+			- ** _Follow up on papers published on this by Dr. Bissell_ **  
 
 - If you use the right combination of inhibitors, you can revert metastatic cell lines
 	- How then do we define an **oncogene**?
@@ -40,6 +40,9 @@ How does it remember to be a mammary gland? Hmm....
 	- Lee et al, JCI, 2012 (found FAM83A family)  
 - Bissell et al, J. Natl. Cancer Inst, 1972 (more glucose uptake by malignant cells)  
 	- Extracellular glucose level could determine the malignant phenotype (Yasuhito Onodera et al, JCI, 2014)  
+- Cell branching patterns dependent on endogeneous inhibitors (Nelson et al, Science, 2006)  
+	- What is this inhibitor?  
+	- *If you cannot describe it, you cannot solve it - be descriptive! :P *  
 
 ###Additional reading
 > Martincorena et al. Science 2015 (high rate of somatic mutations in eyelid tissue!)   
