@@ -44,6 +44,8 @@ How does it remember to be a mammary gland? Hmm....
 	- What is this inhibitor?  
 	- *If you cannot describe it, you cannot solve it - be descriptive! :P *  
 
+- Asymmetrical division in non-malignant cells forms basis of structure; Tumour cells usually will divide symmetrically, 1 to 2, 2 to 4....   
+
 ###Additional reading
 > Martincorena et al. Science 2015 (high rate of somatic mutations in eyelid tissue!)   
 The architecture is still maintained == no cancer! :P  [here] (http://www.ncbi.nlm.nih.gov/pubmed/25999502)  
