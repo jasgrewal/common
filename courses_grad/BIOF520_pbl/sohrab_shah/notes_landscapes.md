@@ -29,7 +29,8 @@
 	- But when cells in a fitness **valley**, ex when under severe stress or growth inhibition, large effect mutations can have a better chance to cause a large leap in the fitness landscape, whereas **small-effect mutations like SNVs** would be less likely to result in significant fitness advantage in a single mutational step. 
 	- *So aneuoploidy is context dependent, based on the shape of the fitness landscape and initial position on the fitness landscape, plus nature of specific aneuploidy under consideration*  
 	- Research has shown *aneuploid mouse embryos show a set of shared developmental defects*, as do primary cell lines derived from these mice  
-	- Acquisiton of aneuploidy **provides increased fitness during evolution of antifungal drug resistance**   
+	- Acquisiton of aneuploidy **provides increased fitness during evolution of antifungal drug resistance**    
+
 >  Pavelka et al, Dr. Jekyll and Mr. Hyde: Role of aneuploidy in cellular adaptation and cancer (2010)  
 
 - Fewer stem cells
@@ -38,7 +39,8 @@
 	- As you get older, there is lesser cost associated with shifting from the wt genotype peak to the malignant genotype pool as the valley sort of gets filled out by mutations **!!!**  
 	- **IN MICE** there's a similar rate of incidence of cancer (humans have 20x longer life than mice, yet largely avoid cancer until after 40 yo). H & M have similar number of tumor suppressor genes. 
 	- **Peto's paradox** : how can large animals effectively avoid cacner
-		- delayed cancer development results from improved/prolonged somatic maintenance
+		- delayed cancer development results from improved/prolonged somatic maintenance   
+
 > Argument present by James DeGregori, "Evolved Tumor Suppression: Why are we so good at not getting cancer" (2011, Cancer Research) [here] (http://cancerres.aacrjournals.org/content/71/11/3739.full.pdf+html)  
 
 - Cancer cell plasticity (stem cell theory)
@@ -48,7 +50,8 @@
 	- Gene regulatory networks are full of **feedback loops** that produce stable attractor states, that the cell has to occupy. *When we introduce instability, a network an produce **multiple** attractor states.*
 		- Each distinct phenotypic cell state is automatically an attractor state of the GRN
 		- However, GRNs are **non conservative systems** far away from thermodynamic equilibrium, so landscape ~= seascape really.   
-	- **Epigenetic** and **fitness** landscapes, (regulatory space vs genotype space)
+	- **Epigenetic** and **fitness** landscapes, (regulatory space vs genotype space)   
+
 > Sui Huang, "Genetic and non genetic instability in tumor progression" (2013, Cancer Metastasis Rev) [here] (http://download.springer.com.ezproxy.library.ubc.ca/static/pdf/695/art%253A10.1007%252Fs10555-013-9435-7.pdf?originUrl=http%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10555-013-9435-7&token2=exp=1457979126~acl=%2Fstatic%2Fpdf%2F695%2Fart%25253A10.1007%25252Fs10555-013-9435-7.pdf%3ForiginUrl%3Dhttp%253A%252F%252Flink.springer.com%252Farticle%252F10.1007%252Fs10555-013-9435-7*~hmac=33ad71083b8c0e99b3f95a8a3e455a7a11792c3d10a3d98c6089cd91e1abffd0)  
 
 ##Mustonen and Lassig, 2009 (Cell)
@@ -79,10 +82,11 @@
 - Mutation models themselves
 	- Can be traditional (all members are subject to same level of mutation) - **fixed mutation model**  
 	- Can be cases where mutation rates are genetically controlled - **genetic mutation model**   
-	- each of these cases can be hypermutation models too, where a fration of the pouplation is replaced by random individuals in each generation, while the rest are subject to baseline mutation rates.  
+	- each of these cases can be hypermutation models too, where a fration of the pouplation is replaced by random individuals in each generation, while the rest are subject to baseline mutation rates.   
+
 ##Miscellany
 ###Clever chemo
-- Facilitate favorable conditions for cells with least resistance to chemo drugs to become more fit and outcompete the rest of the population; prior to chemotherapy.  
+- Facilitate favorable conditions for cells with least resistance to chemo drugs to become more fit and outcompete the rest of the population; prior to chemotherapy.   
 
 ###Oncogenetic Trees
 These represent the common sequences of genetic events during tumour progression. Don't show common ancestory (as required by phylogeny)
