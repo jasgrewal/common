@@ -9,12 +9,16 @@
 - Alternative methods: BLAT (uses k-mer indexing of db, can find seeds faster), DIAMOND  
 - Used in community composition estimation for metagenomics  
 - **Cornerstone** is all-against-all comparisons. ScalaBLAST is used to compute pairwise gene similarities at AA level - computationally expensive.
-	- Alternatively, can use profile scans of databases like TIGRFAM, PFAM, COGS (protein level comparisons). But **new families cannot be identified** by this approach.   
+	- Alternatively, can use profile scans of databases like TIGRFAM, PFAM, COGS (protein level comparisons). But **new families cannot be identified** by this approach.    
+
 ##Reference Databases used    
+- NCBI, KEGG, GenBank, SEED   
+- rRNA dbs: NCBI-nr, Silva, Rfam  
 
 ##Drawbacks   
 ###Poly clonality?  
-- Composite dominant population genomes are **not clonal** due to natura lgenetic variation.   
+- Composite dominant population genomes are **not clonal** due to natura lgenetic variation.    
+
 ###Based on genome profile   
 - Larger genomes are expected to generate more matches than smaller genomes.  
 	- *Assessment of gene abundance, * **not organism abundance**    
@@ -25,6 +29,7 @@
 ###Current issues   
 - Poor representation of microbial diversity by sequenced isolates (problems growing cultures in vitro and isolating etc.)   
 - Currently, BLAST-based **composition estimation** currently overestimates the *abundance of* **highly covered taxa** like Proteobacteria and Firmicutes.     
+
 ####Algorithmic drawbacks    
 - hueristic, local search (seed based)  
 
