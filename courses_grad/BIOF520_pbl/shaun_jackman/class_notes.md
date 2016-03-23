@@ -76,4 +76,10 @@
 
 ##How does a phylogenetic tree of extant species differ from a transmission network?  
 
+##What could've have changed in a genome to confer antibiotic resistance, and how can we get this information from the sequencing data  
+- Insertion of a novel gene
+- Mutation of an existing subunit that is already targetable  
+- Plasmid acquisiton (transfection)   
+
+How do we identify these from the sequencing data?  
 
