@@ -28,7 +28,7 @@
 	- Culture on antibiotic  
 	- other hybridization based methods that do not rely on DNA amplification or culturing? **Hybridization based genotyping**   
 
-###Modes of acquisitoin of resistance  
+###Modes of acquisition of resistance  
 - Resistance mutations  
 - Impermeable barriers  
 - Outer membrane eflux pumps  
