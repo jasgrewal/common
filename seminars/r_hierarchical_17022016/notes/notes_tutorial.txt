@@ -1,0 +1,36 @@
+RNASeq   : Generated at the GSC
+RNASeqv2 : Realigned and reprocessed from fastq, by University of North Carolina
+*_normalized is quantile normalized
+Hierarchical clustering : from expression matrix to distance/correlation matrix
+For HC:
+i) Choose gene set we want to use;  parameters to choose for clustering
+- Low expressed genes. Not needed.
+- Top 25% variable genes: Use Coefficient of Variation, have a minimum mean (set above a 100)
+#THE GENE SET YOU USE WILL INFLUENCE CLUSTERING
+
+
+ii) Log transform, median centralize
+
+iii) Parameter adjustment
+How to decide what is 'close'
+RNA Seq commonly uses Pearson correlation for distance measurement
+
+Plotting:
+pheatmap: Has a built in annotation track for covariates
+Height of dendrogram shows the amount of 'distance' separating your samples. 
+
+Supervised
+Have 4 subtypes + external:
+i) Unsupervised: Top 25% variable in pooled set 
+ii) SUpervised: Top 500 genes DE in each subtype; pool together and uniq; and then do hierarchical clustering using that gene set, on the pooled dataset (4 subtypes + external)
+
+Cutree function cuts the tree/dendrogram and gives you the samples in the separate clusters
+
+Can use consensus cluster plus to calculate an optimal number of clusters to choose. 
+- Want to see 'all blue' and 'all white'
+- In tutorial example, it can be an up-in-the-air selection between 3-4 cluster set. 
+
+SAMR:
+Test statistic that tells you how different a gene is between two groups. Then randomly selects two new groups and sees how different this gene is between these two randomly selected groups (loop 1000 time). Test statistic measures whether a gene is actually differentially regulated in the initial two input groups.
+
+
