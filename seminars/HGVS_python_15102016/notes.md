@@ -1,7 +1,8 @@
-**A practical introduction to using HGVS with python**  
+#**A practical introduction to using HGVS with python**  
 *Presented by* [Reece Hart](reece@invitae.com)  
 *Slides available* [here](https://docs.google.com/presentation/d/1XTvotT6YCsagH0t6tGnCgJhYbHTw1FPwLrPS_sdF_wk/edit#slide=id.g1795fef191_0_51)  
 [Setup](https://docs.google.com/presentation/d/1XTvotT6YCsagH0t6tGnCgJhYbHTw1FPwLrPS_sdF_wk/edit#slide=id.g1795fef191_0_521)  
+
 =======  
 [**HGVS nomenclature**](http://varnomen.hgvs.org)  
 - <sequence>:<type>.<position+edit>  
@@ -10,7 +11,8 @@
 - Normalization of sequencing in cases of indels in repeats which result in the same phenomenological sequence  
 	- VCF shifts towards 5' end  
 - 1033 RefSeq transcripts-genome alignments (422 genes) have indels  
-	- A deletion at one end can be adjusted if there is no gapped alignment for the read. But if there is a gap in the alignment, the interpretation differs.  
+	- A deletion at one end can be adjusted if there is no gapped alignment for the read. But if there is a gap in the alignment, the interpretation differs.   
+
 =======   
 **_hgvs_** [Python package](https://bitbucket.org/biocommons/hgvs)   
 - [Web interface](http://variantvalidator.org)
@@ -28,6 +30,7 @@
 		- Transcript-genome alignments from multiple sources, versions, and alignment methods  
 		- For ex., when it comes to alignment methods, NCBI uses SPLINE, UCSC uses BLAT  
 - **INSTALLATION** `pip install hgvs` (`brew install postgresql` first)  
+
 ======  
 *Using hgvs*  
 [iPython notebook]()   
