@@ -12,7 +12,7 @@
 	- Metric: Contiguity (how long the contigs are) and how accurate the contigs are ( 
 		- We are optimizing for *contiguity*  
 	- For genome assembly, there is one key parameter we can optimize, and then various other weaker ones.  
-- **Paretto Frontier  
+- **Paretto Frontier**   
 	- Setting the boundaries for the metrics  
 	
 - Backend  
