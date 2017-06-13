@@ -52,8 +52,8 @@ ii) **Load libraries**
 If you do not have DESeq2 installed, you will need to run these two commands in your RStudio console:
 `source("http://bioconductor.org/biocLite.R")`   
 `biocLite("DESeq2")`  
-
-For the other 3 packages, you can install them like so:
+`biocLite("biomaRt")`  
+For the other 2 packages, you can install them like so:
 `install.packages("knitr")`
 ```{r, echo=TRUE}
 library(DESeq2)
