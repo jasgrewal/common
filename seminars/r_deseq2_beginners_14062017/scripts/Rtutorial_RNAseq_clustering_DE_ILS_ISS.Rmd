@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(w
 ```
 
 
-#Load Data and libraries   
+# Load Data and libraries    
 i) **First let us download the data**   
 - *Instructions*: **Please SCP the data files from WestGrid. You will have received instructions for this already.** 
 
@@ -63,7 +63,7 @@ library(knitr)
 ```
 
 
-##View the data   
+## View the data   
 **DATA** 
 The values for each gene are raw **counts**. There should be 38,293 genes (rows), across 7 samples (columns). The *dim* function lets us view the dimensions of a dataframe.  
 ```{r, echo=TRUE, message=FALSE}
@@ -82,7 +82,7 @@ kable(covariates)
 ```
 
 
-##Data cleanup   
+## Data cleanup   
 i) Remove all genes where there are zero counts for all samples. You'll be left with 25,600 genes.  
 ```{r, echo=TRUE}
 data_clean = data_raw[as.logical(rowSums(data_raw != 0)), ]
@@ -99,8 +99,8 @@ covariates$Strain = factor(covariates$Strain, levels=c('ILS','ISS'))
 ```
   
 
-#DESeq2 wet toes - Step 1  
-##Build DESeq2 object   
+# DESeq2 wet toes - Step 1  
+## Build DESeq2 object   
 
 We will use the count data in our dataframe **data**, and our covariate information in our dataframe **covariates**, to fit a ***Strain*** based model for the samples. 
 ```{r, echo=TRUE}
@@ -108,7 +108,7 @@ dds_counts <- DESeqDataSetFromMatrix(countData=data, colData=covariates, design=
 ds_fit <- DESeq(dds_counts)
 ```
 
-##Plot PCA
+## Plot PCA
 In order to make sure our data looks sensible, and to check for any outliers, we can plot the first 2 Principal Components of the data. For this, we will first need to retrieve the log transformed counts from our fit object, which we will do with the `rlogTransformation` function in DESeq2.  
 ```{r, echo=TRUE}
 rld <- rlogTransformation(ds_fit, blind=TRUE)
@@ -127,7 +127,7 @@ As we can see, the ILS_S_2_B is quite far away from all the other samples. We wi
 covariates_new = covariates[rownames(covariates)!="ILS_S_2_B",]
 ```
 
-####What are the samples in the covariates table now?   
+#### What are the samples in the covariates table now?   
 ```{r, echo=TRUE, message=FALSE}
 kable(covariates_new) 
 ```
@@ -162,8 +162,8 @@ res = results(ds_new_fit)
 kable(head(res))
 ```
 
-#DESeq2 wet toes - Step 2
-##Differential Expression Analysis   
+# DESeq2 wet toes - Step 2
+## Differential Expression Analysis   
 Lastly, let us try and identify differentially expressed genes in our results object, `res`. But first, let's make sure we have pvalues for all genes (i.e. no pvalues are *weird*)
 
 ```{r, echo=FALSE}
@@ -207,7 +207,7 @@ print(paste("Total genes are", dim(res_nofilter)[1], sep=": "))
 print(paste("Gene with p-value 'NA'", dim(res_nofilter[is.na(res_nofilter$pvalue),])[1],  sep=": "))
 ```
 
-##P-value versus Adjusted P-value    
+## P-value versus Adjusted P-value    
 - If our **null hypothesis** is that no gene is differentially expressed in the ISS strain as compared to the ILS strain of mice, then by random chance we would expect up to 1% of the genes to have a p-value below 0.01.  
 - To adjust for multiple testing, we can use the Benjamini-Hochberg test correction method. Nicely enough, DESeq2 does that for us automatically, and we can find these values in the `padj` column of our new results object, `res_nofilter`.
 
@@ -217,14 +217,14 @@ print(paste("Number of genes with adjusted p-value < 0.01", dim(res_nofilter[(re
 print(paste("1% of total number of genes is ", dim(res_nofilter)[1]*0.01, sep=""))
 ```
 
-#Saving results file   
+# Saving results file   
 We can save our results object to a csv file, to analyze later in Excel or other tools of our choice.  
 ```{r, echo=TRUE}
 write.csv(as.data.frame(res_nofilter), file="results.csv" )
 ```
 
 
-#Data distribution  
+# Data distribution  
 **This section is optional**   
 
 We can look at the dispersion of gene counts around their mean values. 
@@ -243,7 +243,7 @@ Red points indicate genes with adjusted *P* value < 0.1.
 plotMA(res_nofilter, ylim=c(-1,1))
 ```
 
-#Adding gene names  
+# Adding gene names  
 **This section is optional**   
 
 We can replace our ensemble gene names with their official 'mgi' gene names, without using Google! Remember these are mice genes, that's why we need to refer to the *M.musculus* ensembl dataset, and map over the ensemble IDs to the 'MGI' symbol. 
