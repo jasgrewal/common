@@ -159,7 +159,7 @@ print(paste("Total genes are", dim(res_nofilter)[1], sep=": "))
 print(paste("Gene with p-value 'NA'", dim(res_nofilter[is.na(res_nofilter$pvalue),])[1],  sep=": "))
 ```
 
-What? What are these genes then? Let us take a look at the genes in the `results` dataframe which have a pvalue of NA.  
+What? What are these genes then? Let us take a look at the genes in the `res` dataframe which have a pvalue of NA.  
 ```{r, echo=TRUE}
 kable(res[is.na(res$pvalue), ])
 ```
@@ -177,7 +177,7 @@ print(paste("Gene with p-value 'NA'", dim(res_nofilter[is.na(res_nofilter$pvalue
 ```
 
 ##P-value versus Adjusted P-value    
-- If our **null hypothesis** is that no gene is affected by the treatment with ethanol, then by random chance we would expect up to 1% of the genes to have a p-value below 0.01.  
+- If our **null hypothesis** is that no gene is differentially expressed in the ISS strain as compared to the ILS strain of mice, then by random chance we would expect up to 1% of the genes to have a p-value below 0.01.  
 - To adjust for multiple testing, we can use the Benjamini-Hochberg test correction method. Nicely enough, DESeq2 does that for us automatically, and we can find these values in the `padj` column of our new results object, `res_nofilter`.
 
 ```{r, echo=FALSE}
@@ -187,19 +187,26 @@ print(paste("1% of total number of genes is ", dim(res_nofilter)[1]*0.01, sep=""
 ```
 
 #Data distribution  
-**This section is optional**  
-We can look at the distribution of gene values after log transformation, to assess how variable different genes are within the control and experimental group.  
+**This section is optional**   
+
+We can look at the dispersion of gene counts around their mean values. ***What is this, and why is this relevant?***  
+Experiments have found that the negative binomial distribution more appropriately captures the spread of counts for any gene among biological replicates. We need to assume a distribution for our data if we want to estimate any probability of 'extreme events' happening by random chance, from a small set of replicates. 
+**Dispersion plots** show how much every gene's counts deviates from its mean value in our dataset. This gives us an idea of *within-group* variability in our dataset. The red line shows the curve that is fit through the dispersion value of each gene (shown in black). The points in blue are **dispersion outliers**, and do not lie within our expectation for the range of dispersion based on what we have fit to. 
 ```{r, echo=TRUE}
 DESeq2::plotDispEsts(ds_new_fit)
 ```
 
-We can also have an overview of the comparison with an *MA* plot.  
+We can also have an overview of the comparison with an *MA* plot. An MA-plot shows the log-fold changes for genes in our comparison groups versus the average counts for each gene. We can use it to figure out if nwe need to normalize our data. As we go towards lower read count values, there is usually higher variability in the log fold change estimates. This *heteroskedasticity* is because the ratios come out noisier for lower counts.  
+DESeq2 tries to fix this by making the Log Fold Change estimate *shrink towards zero* when there are low counts for a gene, or when the dispersion for a gene is high, or when there are few degrees of freedom in the model. You can read more about this [here](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8).  
+Red points indicate genes with adjusted *P* value < 0.1.  
+
 ```{r, echo=TRUE}
 plotMA(res_nofilter, ylim=c(-1,1))
 ```
 
 #Adding gene names  
-*optional section*  
+**This section is optional**   
+
 We can replace our ensemble gene names with their official 'mgi' gene names, without using Google! Remember these are mice genes, that's why we need to refer to the *M.musculus* ensembl dataset, and map over the ensemble IDs to the 'MGI' symbol. 
 ```{r, echo=TRUE}
 ensembl = useMart("ensembl", dataset="mmusculus_gene_ensembl")
