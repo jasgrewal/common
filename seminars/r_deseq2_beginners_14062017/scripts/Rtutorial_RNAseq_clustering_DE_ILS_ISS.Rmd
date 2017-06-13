@@ -22,8 +22,8 @@ i) First let us download the data
     - **covariates** contains information for each sample, defining experimental groups.   
 
 ```{r, echo=TRUE}
-data_raw = read.table("../data/ILS_ISS_saline_HTSeq_nostats.txt", header=TRUE, stringsAsFactors=FALSE)
-covariates = read.table("../data/ILS_ISS_saline_HTSeq_nostats_covars.txt", header=TRUE, stringsAsFactors=FALSE)
+data_raw = read.table("ILS_ISS_saline_HTSeq_nostats.txt", header=TRUE, stringsAsFactors=FALSE)
+covariates = read.table("ILS_ISS_saline_HTSeq_nostats_covars.txt", header=TRUE, stringsAsFactors=FALSE)
 ```
 
 ii) Load libraries  
