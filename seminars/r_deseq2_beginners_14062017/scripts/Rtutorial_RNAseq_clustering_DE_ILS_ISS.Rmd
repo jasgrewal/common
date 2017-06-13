@@ -1,5 +1,7 @@
 ---
-title: "tutorial_RNASeq_DESeq2.Rmd"
+title: "Differential Expression Analysis with DESeq2  for beginners/intermediate"
+author: "Jasleen Grewal"
+date: "Wednesday, June 14, 2017"
 output:
   pdf_document:
     toc: true
@@ -12,26 +14,47 @@ knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(w
 
 
 #Load Data and libraries   
-i) First let us download the data   
-- *Instructions*: **Forthcoming** 
+i) **First let us download the data**   
+- *Instructions*: **Please SCP the data files from WestGrid. You will have received instructions for this already.** 
 
-    We will be using an in-house dataset of [Inbred Long Sleep, ILS](https://www.jax.org/strain/009324) and [Inbred Short Sleep, ISS](https://www.jax.org/strain/009325) mice. The ILS strain is selected for 'longer recovery' from ethanol consumption. The ISS strain is selected for 'quicker recovery' from ethanol consumption (they don't get hangovers). This is because the ILS strain has a particular allele of the *Lore2* gene that exhibits an increase in the *loss of righting response time*. You can read more about it [here](http://pubmedcentralcanada.ca/pmcc/articles/PMC3581861/). Our dataset has 3 ILS samples treated with saline (controls) and 4 ISS samples treated with saline (treatment).
+    We will be using an in-house dataset of [Inbred Long Sleep, ILS](https://www.jax.org/strain/009324) and [Inbred Short Sleep, ISS](https://www.jax.org/strain/009325) mice. The ILS strain is selected for 'longer recovery' from ethanol consumption. The ISS strain is selected for 'shorter recovery' from ethanol consumption (they don't get hangovers). This is because the ILS strain has a particular allele of the *Lore2* gene that exhibits an increase in the *loss of righting response time*. You can read more about it [here](http://pubmedcentralcanada.ca/pmcc/articles/PMC3581861/). Our dataset has 3 ILS samples treated with saline (control strain) and 4 ISS samples treated with saline (treatment strain).
     The counts have been calculated using HTSeq.  
     We will be loading our data into the *object* **data_raw**. 
     We will be loading our covariate information into the *object* **covariates**.  By default, these objects are dataframes, a type of table in R.  
-    - **data_raw** is a data matrix, where each row is a gene and each column is a sample.  
-    - **covariates** contains information for each sample, defining experimental groups.   
+    - **data_raw** contains our count data, where each row is a gene and each column is a sample.  
+    - **covariates** contains information for each sample, defining experimental groups. Here, each row is a sample, and each column defines different *attributes* of the sample.  
 
 ```{r, echo=TRUE}
 data_raw = read.table("ILS_ISS_saline_HTSeq_nostats.txt", header=TRUE, stringsAsFactors=FALSE)
 covariates = read.table("ILS_ISS_saline_HTSeq_nostats_covars.txt", header=TRUE, stringsAsFactors=FALSE)
 ```
 
-ii) Load libraries  
+We can see the gene names in the *data_raw* dataframe by printing the **row names**, like so:  
+```{r, echo=TRUE}
+head(rownames(data_raw))
+```
+*The head command lets us view the first 6 entries, instead of printing alllll the genes*  
+
+
+We can see the sample names in the *data_raw* dataframe by printing the **column names**, like so:  
+```{r, echo=TRUE}
+colnames(data_raw)
+```
+
+We can see the sample names in the **covariates** dataframe by printing the **row names**, like so:
+```{r, echo=TRUE}
+rownames(covariates)
+```
+
+
+
+ii) **Load libraries**  
 If you do not have DESeq2 installed, you will need to run these two commands in your RStudio console:
 `source("http://bioconductor.org/biocLite.R")`   
 `biocLite("DESeq2")`  
 
+For the other 3 packages, you can install them like so:
+`install.packages("knitr")`
 ```{r, echo=TRUE}
 library(DESeq2)
 library(ggplot2)
@@ -120,14 +143,15 @@ What are the dimensions of our new dataset? (We should have 25,394 genes, and 6 
 print(dim(data_new))
 ```
 
-Let us review our PCA plot, to make sure everything looks good and we have removed the outlier.  
+Let us fit the model, again. Our model will be saved in the object, `ds_new_fit`.  
 ```{r, echo=TRUE, message=FALSE}
 dds_new_counts <- DESeqDataSetFromMatrix(countData=data_new, colData=covariates_new, design=~Strain)
 ds_new_fit <- DESeq(dds_new_counts)
 rld_new <- rlogTransformation(ds_new_fit, blind=TRUE)
 ```
 
-```{r, echo=FALSE}
+Let us also review our PCA plot, to make sure everything looks good and that we have removed the outlier.  
+```{r, echo=TRUE}
 DESeq2::plotPCA(rld_new, intgroup=c("Strain"))  + theme_bw() + geom_text(aes(label=colnames(rld_new)))
 ```
 
@@ -140,7 +164,7 @@ kable(head(res))
 
 #DESeq2 wet toes - Step 2
 ##Differential Expression Analysis   
-Lastly, let us try and identify differentially expressed genes in our results object, `res`.
+Lastly, let us try and identify differentially expressed genes in our results object, `res`. But first, let's make sure we have pvalues for all genes (i.e. no pvalues are *weird*)
 
 ```{r, echo=FALSE}
 print(paste("Total genes are", dim(res)[1], sep=": "))
@@ -148,7 +172,7 @@ print(paste("Gene with p-value 'NA'", dim(res[is.na(res$pvalue),])[1],  sep=": "
 ```
 
 #### Whatever is an NA p-value?   
-Sometimes with DESeq, a gene with a p-value of NA mean that the gene's counts were below DESeq2's internal threshold for assessing any sort of substantial differential expression. This is called *independent filtering*, and we can remove this by setting the `independentFiltering` flag to FALSE, like so:  
+Sometimes with DESeq2, a gene with a p-value of NA mean that the gene's counts were below DESeq2's internal threshold for assessing any sort of substantial differential expression. This is called *independent filtering*, and we can remove this by setting the `independentFiltering` flag to FALSE when we generate our results from the model we fit, like so:  
 ```{r, echo=TRUE}
 res_nofilter = results(ds_new_fit, independentFiltering = FALSE)
 ```
@@ -162,6 +186,13 @@ print(paste("Gene with p-value 'NA'", dim(res_nofilter[is.na(res_nofilter$pvalue
 What? What are these genes then? Let us take a look at the genes in the `res` dataframe which have a pvalue of NA.  
 ```{r, echo=TRUE}
 kable(res[is.na(res$pvalue), ])
+```
+
+What were the original count values of these genes? Let us get these gene names, and then *subset* our dataframe with the counts, `data_new`, with these genes.  
+```{r, echo=TRUE}
+genes_NA = rownames(res[is.na(res$pvalue), ])
+genecounts_NA = data_new[genes_NA,]
+kable(genecounts_NA)
 ```
 
 In our case, it appears that there are some genes with count outliers. That is, a single sample has a count that is disproportionally impacting the log fold changes and resulting p-values. These are genes whose counts do not fit to a negative binomial distribution, but sadly this discussion lies outside the scope of this tutorial. 
@@ -186,12 +217,20 @@ print(paste("Number of genes with adjusted p-value < 0.01", dim(res_nofilter[(re
 print(paste("1% of total number of genes is ", dim(res_nofilter)[1]*0.01, sep=""))
 ```
 
+#Saving results file   
+We can save our results object to a csv file, to analyze later in Excel or other tools of our choice.  
+```{r, echo=TRUE}
+write.csv(as.data.frame(res_nofilter), file="results.csv" )
+```
+
+
 #Data distribution  
 **This section is optional**   
 
-We can look at the dispersion of gene counts around their mean values. ***What is this, and why is this relevant?***  
-Experiments have found that the negative binomial distribution more appropriately captures the spread of counts for any gene among biological replicates. We need to assume a distribution for our data if we want to estimate any probability of 'extreme events' happening by random chance, from a small set of replicates. 
-**Dispersion plots** show how much every gene's counts deviates from its mean value in our dataset. This gives us an idea of *within-group* variability in our dataset. The red line shows the curve that is fit through the dispersion value of each gene (shown in black). The points in blue are **dispersion outliers**, and do not lie within our expectation for the range of dispersion based on what we have fit to. 
+We can look at the dispersion of gene counts around their mean values. 
+***What is this, and why is this relevant?***  
+Experiments have found that the negative binomial distribution more appropriately captures the spread of counts for any gene among biological replicates in RNAseq. We need to assume a distribution for our data if we want to estimate any probability of 'extreme events' happening by random chance, from a small set of replicates. 
+**Dispersion plots** show how much every gene's counts deviates from its mean value in our dataset. This gives us an idea of *within-group* variability in our dataset. The red line shows the curve that is fit through the dispersion value of each gene (shown in black). The points in blue are **dispersion outliers**, and do not fall within our expectation for the range of dispersion based on what we have fit to. 
 ```{r, echo=TRUE}
 DESeq2::plotDispEsts(ds_new_fit)
 ```
@@ -219,10 +258,4 @@ res_nofilter$mgi_symbol <- genemap$mgi_symbol[ idx ]
 The resulting results table looks like this:  
 ```{r, echo=TRUE}
 kable(head(res_nofilter))
-```
-
-#Saving results file   
-We can save our results object to a csv file, to analyze in Excel or other tools of our choice.  
-```{r, echo=TRUE}
-write.csv(as.data.frame(res_nofilter), file="results.csv" )
 ```
