@@ -6,15 +6,16 @@ output:
     toc_depth: 3
 ---
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=80),tidy=TRUE)
 ```
+
 
 #Load Data and libraries   
 i) First let us download the data   
 - *Instructions*: **Forthcoming** 
 
-    We will be using an in-house dataset of [Inbred Long Sleep, ILS](https://www.jax.org/strain/009324) and [Inbred Short Sleep, ISS](https://www.jax.org/strain/009325) mice. The ILS strain is selected for 'longer recovery' from ethanol consumption. The ISS strain is selected for 'quicker recovery' from ethanol consumption (they don't get hangovers). This is because the ISS strain has a particular allele of the *Lore2* gene that exhibits an increase in the *loss of righting response time*. You can read more about it [here](http://pubmedcentralcanada.ca/pmcc/articles/PMC3581861/). Our dataset has 3 ILS samples treated with saline (controls) and 4 ISS samples treated with saline (treatment).
+    We will be using an in-house dataset of [Inbred Long Sleep, ILS](https://www.jax.org/strain/009324) and [Inbred Short Sleep, ISS](https://www.jax.org/strain/009325) mice. The ILS strain is selected for 'longer recovery' from ethanol consumption. The ISS strain is selected for 'quicker recovery' from ethanol consumption (they don't get hangovers). This is because the ILS strain has a particular allele of the *Lore2* gene that exhibits an increase in the *loss of righting response time*. You can read more about it [here](http://pubmedcentralcanada.ca/pmcc/articles/PMC3581861/). Our dataset has 3 ILS samples treated with saline (controls) and 4 ISS samples treated with saline (treatment).
     The counts have been calculated using HTSeq.  
     We will be loading our data into the *object* **data_raw**. 
     We will be loading our covariate information into the *object* **covariates**.  By default, these objects are dataframes, a type of table in R.  
@@ -38,7 +39,8 @@ library(biomaRt)
 library(knitr)
 ```
 
-##View the data  
+
+##View the data   
 **DATA** 
 The values for each gene are raw **counts**. There should be 38,293 genes (rows), across 7 samples (columns). The *dim* function lets us view the dimensions of a dataframe.  
 ```{r, echo=TRUE, message=FALSE}
@@ -56,10 +58,11 @@ Let us also take a look at the covariates dataframe.
 kable(covariates)  
 ```
 
-##Data cleanup  
-i) Remove all genes where there are zero counts for all samples. You'll be left with 25,094 genes.  
+
+##Data cleanup   
+i) Remove all genes where there are zero counts for all samples. You'll be left with 25,600 genes.  
 ```{r, echo=TRUE}
-data_clean = data_raw[rowSums(data_raw[, -1])>0, ]
+data_clean = data_raw[as.logical(rowSums(data_raw != 0)), ]
 dim(data_clean)
 ```
 
@@ -72,8 +75,10 @@ data=data_clean[,row.names(covariates)]
 covariates$Strain = factor(covariates$Strain, levels=c('ILS','ISS'))
 ```
   
-#DESeq2 wet toes - Step 1
-##Build DESeq2 object  
+
+#DESeq2 wet toes - Step 1  
+##Build DESeq2 object   
+
 We will use the count data in our dataframe **data**, and our covariate information in our dataframe **covariates**, to fit a ***Strain*** based model for the samples. 
 ```{r, echo=TRUE}
 dds_counts <- DESeqDataSetFromMatrix(countData=data, colData=covariates, design=~Strain)
@@ -99,18 +104,18 @@ As we can see, the ILS_S_2_B is quite far away from all the other samples. We wi
 covariates_new = covariates[rownames(covariates)!="ILS_S_2_B",]
 ```
 
-What are the samples in the covariates table now?  
+####What are the samples in the covariates table now?   
 ```{r, echo=TRUE, message=FALSE}
 kable(covariates_new) 
 ```
 
-Next, we will again make sure we are keeping the data for the samples we have the covariate information for (no more *ILS_S_2_B* !). We will also remove any genes that have no counts in any of our samples.   
+Next, we will again make sure we are keeping the data for the samples we have the covariate information for (no more *ILS_S_2_B* !). We will also remove any genes that have 'zero' counts in all of our samples.   
 ```{r, echo=TRUE, message=FALSE}
 data_new = data_clean[,rownames(covariates_new)]
-data_new = data_new[rowSums(data_new[, -1])>0, ]
+data_new = data_new[as.logical(rowSums(data_new != 0)), ]
 ```
 
-What are the dimensions of our new dataset? (We should have 24,848 genes, and 6 samples now).  
+What are the dimensions of our new dataset? (We should have 25,394 genes, and 6 samples now).  
 ```{r, echo=TRUE, message=FALSE}
 print(dim(data_new))
 ```
