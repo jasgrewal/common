@@ -1,0 +1,28 @@
+---
+title: "ga_optimizer"
+author: "Jasleen Grewal"
+date: '2016-10-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## GA algorithm
+This is an R package that uses genetic algorithms for function parameter optimzation <https://cran.r-project.org/web/packages/GA/index.html>.
+
+```{r loadlibs}
+library("testthat")
+library("GA")
+library("genalg")
+```
+
+## Visualize data?
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+#plot(pressure)
+```
+

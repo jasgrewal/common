@@ -1,4 +1,4 @@
-#Project 2 goals  
+#Project 2 goals - ABYSS optimizer   
 ## Evaluate a bunch of parameter optimization tools  
 - Response metric   
 - Solution function is unknown  
@@ -6,6 +6,7 @@
 	- Approach 1: Start halfway and try a point to the left and to the right, find next best, *exploitation*  
 	- Approach 2: Try a bunch of random ranges, *exploration*  
 	- Approach 3: Grid search  
+	- Approach 4: Amoeba method (part of paropts) - Nelder Mead  
 - Current problem evaluation  
 	- Human genome assembly  
 	- Shotgun sequencing to contigs is ~24 hours  

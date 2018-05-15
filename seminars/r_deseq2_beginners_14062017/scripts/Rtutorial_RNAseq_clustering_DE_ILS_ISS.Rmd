@@ -230,7 +230,7 @@ write.csv(as.data.frame(res_nofilter), file="results.csv" )
 We can look at the dispersion of gene counts around their mean values. 
 ***What is this, and why is this relevant?***  
 Experiments have found that the negative binomial distribution more appropriately captures the spread of counts for any gene among biological replicates in RNAseq. We need to assume a distribution for our data if we want to estimate any probability of 'extreme events' happening by random chance, from a small set of replicates. 
-**Dispersion plots** show how much every gene's counts deviates from its mean value in our dataset. This gives us an idea of *within-group* variability in our dataset. The red line shows the curve that is fit through the dispersion value of each gene (shown in black). The points in blue are **dispersion outliers**, and do not fall within our expectation for the range of dispersion based on what we have fit to. 
+**Dispersion plots** show how much every gene's counts deviates from its mean value in our dataset. The red line shows the curve that is fit through the dispersion value of each gene (shown in black). The points in blue are **dispersion outliers**, and do not fall within our expectation for the range of dispersion based on what we have fit to. *Please look up `shrinkage` of transformed gene counts in DESeq2 if you're interested in this sort of assessment of the data.*
 ```{r, echo=TRUE}
 DESeq2::plotDispEsts(ds_new_fit)
 ```

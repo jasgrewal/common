@@ -1,0 +1,137 @@
+---
+title: "genalg_optimizer"
+author: "Jasleen Grewal"
+date: '2016-10-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#Package genalg contains rbga(), an implementation of a genetic algorithm for multi-dimensional function optimization.
+```
+
+## GA algorithm
+This is an R package that uses genetic algorithms for function parameter optimzation <https://cran.r-project.org/web/packages/GA/index.html>.
+
+```{r loadlibs, echo=FALSE}
+library("testthat")
+library("genalg")
+library("readr")
+```
+
+##Source data reading functions 
+Let us source the wrapper functions for our tool (Abyss)
+
+```{r pressure, echo=FALSE}
+#TO DO: have a function here that wgets the data file and points infile var to downloaded file
+setwd("/Users/jgrewal/mygits/2016_project_2/")
+source(paste(getwd(), "scripts/R_optimizers/common/AbyssWrapper.R", sep="/"))
+```
+
+##Define function to optimize
+```{r funcopt, echo=TRUE}
+#Target metric is N50
+#f <- function(x)  (return(runAbyssTest(k=round(x))))
+f <- function(x) (x-30)^2
+
+```
+
+##Define test parameter ranges
+```{r params, echo=TRUE}
+getrange <- function(min, max, stepsize=0){#If stepsize zero, range is continuous
+  real_val='real-valued'
+  if(!(stepsize)){stepsize=max-min; real_val=FALSE}
+  return(list(seqdat=seq(min, max, stepsize), seqtype=real_val))
+  }
+k = list(min=16, max=49, seqtype='real-valued')
+np = list(min=10, max=20, seqtype='permutation')
+multiparam = list(k, np)
+```
+
+##Set up monitoring functions (single and multiple params)
+```{r monitor_genalg, echo=FALSE}
+devtools::install_github("dgrtwo/gganimate"); library(gapminder)
+library(ggplot2)
+theme_set(theme_bw())
+```
+##1Call genalg algorithm (single param fit)
+```{r genalg_func, echo=FALSE,results='hide'}
+#optim = False (default), doing local optimization search
+#THIS PACKAGE IS A MINIMIZATION OPTIMIZER!!!
+inparam=np
+
+
+monitor_1param <- function(obj) {
+  # plot the population
+  itercount <<- itercount+1
+  if(itercount==1){
+    monitordat=data.frame(); 
+  }
+  monitordat <<- rbind(monitordat, data.frame(xmin=obj$stringMin[1],xmax=obj$stringMax[1], input_param=obj$population[,1],response_metric=obj$evaluations, iter=itercount))
+  print(dim(monitordat));# print(obj);stop()
+  xlim = c(obj$stringMin[1], obj$stringMax[1]);
+  ylim = c(obj$stringMin[2], obj$stringMax[2]);
+  plot(obj$population, xlim=xlim, ylim=ylim,
+       xlab="input_param", ylab="response_metric"); 
+}
+itercount=0;
+rbga.results = rbga(c(0, 1), c(inparam$max, 10), monitorFunc=monitor_1param,popSize=100,
+                    evalFunc=function(x) abs(round(x[1])-5) + abs(round(x[2])-4),iter=100, verbose=TRUE, mutationChance=0.1)
+plot(rbga.results); 
+
+rbga.results = rbga(c(0),c(10), popSize=100,evalFunc=function(x) return(c(abs(round(x[1])-5),abs(round(x[1])-2))),iter=100, verbose=TRUE, mutationChance=0.1)
+
+p <- ggplot(monitordat, aes(input_param, response_metric, frame = iter)) +geom_point() +scale_x_log10()
+```
+
+View summary of fit
+```{r gafit}
+cat(summary(rbga.results))
+resultdat <- capture.output(cat(summary(rbga.results)))
+bestsol= strsplit(resultdat[grep("Best Solution",resultdat)], split=" ")[[1]]
+bestsol= as.numeric(bestsol[grep("[0-9]+", bestsol)])
+bestsol_discrete = unlist(lapply(bestsol,round,0))
+cat("Best input params are ", bestsol_discrete)
+
+library(gganimate)
+gg_animate(p, "output.gif")
+plot(rbga.results)
+```
+
+###Response variable vs Input parameter plot
+```{r varplot, echo=FALSE}
+curve(f, k$min, k$max, n=1000)
+points(GA@solution, GA@fitnessValue,col=2,pch=19)
+```
+
+##Call GA algorithm (two param fit)
+```{r gafunctwoparam, results='hide'}
+#type can only be one type 
+##unlist(lapply(multiparam,function(x) (x$seqtype))) does not work
+x1 = seq(multiparam[[1]]$min, multiparam[[1]]$max,1)
+x2 = seq(multiparam[[2]]$min, multiparam[[2]]$max,1)
+
+twofit = outer(x1, x2, f_twoparam)
+GA_multi <- ga(type='real-valued', fitness=function(x)(f_twoparam(x[1],x[2])), min=unlist(lapply(multiparam,function(x) (x$min))), max=unlist(lapply(multiparam,function(x) (x$max))), monitor=TRUE)
+```
+Display summary of fit
+```{r gafunctwoparamsum}
+summary(GA_multi)
+plot(GA)
+```
+
+###Visualize param1 vs param2 with optimal combination indicated
+```{r 3dplotresult}
+#persp3D(multiparam[1]$seqtype, multi)
+filled.contour(x1,x2, twofit, color.palette = bl2gr.colors, 
+  plot.axes = { axis(1); axis(2); 
+                points(GA_multi@solution[,1], GA_multi@solution[,2], 
+                       pch = 3, cex = 2, col = "white", lwd = 2) }
+)
+```
+
+###Pareto Frontier plot 
+Response variable 1 vs Response variable 2
+```{r makepareto}
+
+```

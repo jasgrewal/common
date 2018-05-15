@@ -1,0 +1,114 @@
+---
+title: "ga_optimizer"
+author: "Jasleen Grewal"
+date: '2016-10-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## GA algorithm
+This is an R package that uses genetic algorithms for function parameter optimzation <https://cran.r-project.org/web/packages/GA/index.html>.
+
+```{r loadlibs, echo=FALSE}
+library("testthat")
+library("GA")
+library("readr")
+```
+
+##Source data reading functions 
+Let us source the wrapper functions for our tool (Abyss)
+
+```{r getwrapper, echo=FALSE,eval=FALSE}
+#TO DO: have a function here that wgets the data file and points infile var to downloaded file
+#setwd("/Users/jgrewal/mygits/2016_project_2/")
+setwd("/Users/jgrewal/mygits/common/hackseq_2016/")
+source(paste(getwd(), "scripts/R_optimizers/common/AbyssWrapper.R", sep="/"))
+```
+
+##Define function to optimize
+```{r funcopt, echo=TRUE}
+#Target metric is N50
+#f <- function(x)  (return(runAbyssTest(k=round(x))))
+f <- function(x) (x-30)^2
+f_twoparam <- function(x1, x2) (x1 + x2)
+```
+
+##Define test parameter ranges
+```{r params, echo=TRUE}
+getrange <- function(min, max, stepsize=0){#If stepsize zero, range is continuous
+  real_val='real-valued'
+  if(!(stepsize)){stepsize=max-min; real_val=FALSE}
+  return(list(seqdat=seq(min, max, stepsize), seqtype=real_val))
+  }
+k = list(min=16, max=49, seqtype='real-valued')
+np = list(min=10, max=20, seqtype='permutation')
+multiparam = list(k, np)
+```
+
+##1. Call GA algorithm (single param fit)
+```{r gafunc, echo=FALSE,results='hide'}
+#type = c("binary", "real-valued", "permutation")
+##type.real-valued = decision variables are floating-point representations of real numbers. 
+##type.permutation = for problems that involves reordering of a list.
+#optim = False (default), doing local optimization search
+#optimArgs = c(method="L-BFGS-B") (default) 
+inparam=k
+GA <- ga(type=inparam$seqtype, fitness=f, min=inparam$min, max=inparam$max, monitor=TRUE)
+```
+View summary of fit
+```{r gafit}
+summary(GA)
+```
+Plot path of search
+```{r searchpath, echo=FALSE}
+plot.ga-method(GA)
+
+```
+Now let us visualize the GA results across a single parameter fit
+```{r plotga, echo=FALSE}
+plot(GA)
+```
+
+###Response variable vs Input parameter plot
+```{r varplot, echo=FALSE}
+curve(f, k$min, k$max, n=1000)
+points(GA@solution, GA@fitnessValue,col=2,pch=19)
+```
+
+##2. Multi-metric optimization  
+(other metric is L50)  
+
+##3. Call GA algorithm (two param fit)
+```{r gafunctwoparam, results='hide'}
+#type can only be one type 
+##unlist(lapply(multiparam,function(x) (x$seqtype))) does not work
+x1 = seq(multiparam[[1]]$min, multiparam[[1]]$max,1)
+x2 = seq(multiparam[[2]]$min, multiparam[[2]]$max,1)
+
+twofit = outer(x1, x2, f_twoparam)
+GA_multi <- ga(type='real-valued', fitness=function(x)(f_twoparam(x[1],x[2])), min=unlist(lapply(multiparam,function(x) (x$min))), max=unlist(lapply(multiparam,function(x) (x$max))), monitor=TRUE)
+```
+Display summary of fit
+```{r gafunctwoparamsum}
+summary(GA_multi)
+plot(GA)
+```
+
+###Visualize param1 vs param2 with optimal combination indicated
+```{r 3dplotresult}
+#persp3D(multiparam[1]$seqtype, multi)
+filled.contour(x1,x2, twofit, color.palette = bl2gr.colors, 
+  plot.axes = { axis(1); axis(2); 
+                points(GA_multi@solution[,1], GA_multi@solution[,2], 
+                       pch = 3, cex = 2, col = "white", lwd = 2) }
+)
+```
+
+###Pareto Frontier plot 
+Response variable 1 vs Response variable 2
+```{r makepareto}
+
+```
