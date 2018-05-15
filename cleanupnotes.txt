@@ -1,1 +1,0 @@
-java -jar ../../Downloads/bfg-1.12.12.jar --delete-files *assignment*
