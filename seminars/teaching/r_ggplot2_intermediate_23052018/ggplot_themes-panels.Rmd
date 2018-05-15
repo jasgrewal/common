@@ -17,7 +17,7 @@ height_basic=6
 
 
 # Getting started 
-If this is your first time using the ggplot2 library within R, please refer to the [**Beginners Tutorial**]().  
+If this is your first time using the ggplot2 library within R, please refer to the [**Beginners Tutorial**](https://jasgrewal.github.io/common/seminars/teaching/r_ggplot2_beginners_08112017/ggplot_intro.pdf).  
 
 ```{r opts, eval=FALSE}
 install.packages("ggplot2")
