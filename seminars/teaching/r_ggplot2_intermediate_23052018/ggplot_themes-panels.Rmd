@@ -3,13 +3,13 @@ title: "Modifying ggplot objects - intermediate tutorial"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -71,7 +71,7 @@ msleep = na.omit(msleep)
 
 \pagebreak  
 
-# Getting our data  
+# Preparing our data  
 
 ## Get Data  
 
@@ -87,30 +87,42 @@ kable(head(midwest))
 ```
 
 ## Exploratory plots  
-I will generate some exploratory figures from our dataset first. In the next parts of the tutorial we will be modifying things like panels, font size, colour, panel colour, grid-lines - since most of our ggplot will retain the same structure (we will only be **stylizing** aspects of it), I will 'initialize' each new exploratory plot as a separate object, using `obj_name <- ggplot(something something)` . This comes in handy if we want to keep adding new 'geometric objects' on top of our original ggplot figure, without copying the code every single time.  
-
-```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
+Let us generate some exploratory figures from our dataset. Firstly we will try to plot the population density across different counties in different states, as histograms:  
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=3.5}
 # What does the state-wise population density look like? 
-# I will plot each data point (for all countys in each state), and use 'stat_summary' to also show the mean and standard deviation of the data  
-g1_popdensity <- ggplot(midwest, aes(x=state, y=popdensity)) + geom_point(alpha=0.5, ) + stat_summary(colour="red") + theme_minimal(base_size=13) +  labs(x="State", y="Population Density")
-plot(g1_popdensity)
+ggplot(midwest, aes(fill=state, x=popdensity)) + geom_histogram() + theme_minimal(base_size=13) +  labs(x="Population Density", y="Number of counties")
 ```
 
-Notice how the y-axis has such a wide range but most of our data is in a tiny range - we can log transform the data to 'spread it out'- I will do this for visualizing the population of white people in the different states.  
-- Instead of `log` transforming my column on the actual dataset, I can simply apply the function to the `y` variable within `aes()`.  
-```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
-g1_popwhite <- ggplot(midwest, aes(x=state, y=log2(popwhite))) + geom_point(alpha=0.5, ) + stat_summary(colour="red", size=4) + theme_minimal(base_size=11) +  labs(x="State", y="Log transformed - Population of Whites")
+Notably, the histogram is currently stacked for different states. We can 'separate' the states as separate bars, by modifying `position` in `geom_histogram():  
+
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=3}
+ggplot(midwest, aes(fill=state, x=popdensity)) + geom_histogram(position="dodge") + theme_minimal(base_size=13) +  labs(x="Population Density", y="Number of counties")
 ```
 
-Maybe I also want to compare the population of whites against black people in the different countys of all states?  
+We can also visualize these as state-specific data distributions, like so:  
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=3}
+ggplot(midwest, aes(fill=state, x=popdensity)) + geom_density(alpha=0.4) + theme_minimal(base_size=13) +  labs(x="Population Density", y="Number of counties")
+```
+
+Notice how the y-axis has such a wide range but most of our data is in a tiny range - we can log transform the data to 'spread it out'.   
+- Instead of `log` transforming my column on the actual dataset, I can simply apply the function to the `y` variable within `aes()`.   
+- In the next parts of the tutorial we will be modifying things like panels, font size, colour, panel colour, grid-lines - since most of our ggplot will retain the same structure (we will only be **stylizing** aspects of it), I will 'initialize' each new exploratory plot as a separate object, using `obj_name <- ggplot(something something)` . This comes in handy if we want to keep adding new 'geometric objects' on top of our original ggplot figure, without copying the code every single time.   
+
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=3}
+g1_popwhite <- ggplot(midwest, aes(fill=state, x=log2(popdensity))) + geom_density(alpha=0.4) + theme_minimal(base_size=13) +  labs(x="Log transformed - Population Density", y="Proportion of counties")
+plot(g1_popwhite)
+```
+
+Maybe I want to compare the population of whites against black people in the different counties of all states?  
 - We can fit a 'loess' curve to see specific trends for different states, with the `stat_smooth()` element.  
   - This can be modified with the `method` option in `stat_smooth()`  
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
 scatter_popbw <- ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5, ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites")
 ```
-Try the following  
-- Remove the SD spread (set `se = FALSE` in `stat_smooth()`)
-- Plot the SD spread in the 90% confidence interval (set `level = 0.90` in `stat_smooth()`)  
+
+Try the following:  
+- Remove the SD spread (set `se = FALSE` in `stat_smooth()`)  
+- Plot the SD spread in the 90% confidence interval (set `level = 0.90` in `stat_smooth()`)   
 
 # Modifying guides  
 Notice how, in the legend for colours in our last plot, the points appear faint - this is because by default, we plot them with alpha=0.5. However, we ideally want our points to appear with full opaqueness in our legend. For this, we modify the `guides()` element.  
@@ -130,8 +142,8 @@ scatter_goodalpha <- scatter_popbw + guides(colour = guide_legend(override.aes =
 scatter_goodalpha + guides(colour=guide_legend(title="American State"))
 ```
 
-Oops- notice how adding `guides` twice to a plot only keeps the last definition? Best to just define it once.  
-We will also remove the annoying 'grey' colour around the line by setting `fill=NA` in the `override.aes` section.  
+Oops- notice how adding `guides` twice to a plot only keeps the last definition? Best to just define it once.   
+We will also remove the annoying 'grey' colour around the line by setting `fill=NA` in the `override.aes` section.   
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=6}
 # Define all legend modifications in 1 guides() statement
@@ -147,7 +159,7 @@ In the last plot, you may be having a hard time distinguishing the different sta
 \pagebreak  
 
 # Facet Wrap and Facet Grid - plotting variables  
-The `facet_wrap()` function lets us split our data-points into separate groups based on a single column. We can also do this to compare two columns. If we are interested in visualizing all pair-wise comparisons between two columns (even when there may be no data points available for certain pairs of values), we use `facet_grid()`. 
+The `facet_wrap()` function lets us split our data-points into separate groups based on a single column. We can also do this to compare two columns. If we are interested in visualizing all pair-wise comparisons between two columns (even when there may be no data points available for certain pairs of values), we use `facet_grid()`.  
 The following two plots show the difference between the outputs of `facet_wrap()` and `facet_grid()`.  
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
@@ -163,7 +175,7 @@ g1_fg
 ```
 
 As you can see, `facet_grid()` is much more readable. We can improve readibility by removing entries along the x-axis that do not have any values in a given 'panel'. This is done using the `scales` option in `facet_grid()` - the possible values are "free_x", "free_y", "free". Depending on what you want your reader to focus on, one of these options may be chosen.  
-We can also make sure the panel width is complementary to the amount of space the data points *actually* take up. We can set this using the `space` option, which has the same set of possible values as `scales`.  
+We can also make sure the panel width is complementary to the amount of space the data points *actually* take up. We can set this using the `space` option, which has the same set of possible values as `scales`.    
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
 # Create plot object
@@ -171,11 +183,12 @@ g1_fg_clean <- multiline_labels + ggtitle("Compact Facet Grid plot") + facet_gri
 # Print plot object
 g1_fg_clean
 ```
-  - Try removing the `space` option and see how the plot changes.  
-  - What happens if you set `scales = "free"`? Do you see why including a free scale for 'y' might be misleading for readers?  
-  - Do you also see how it is handy to create a new plot object?  
 
-Instead of having horizontally aligned columns in `facet_grid`, we can generate vertically aligned columns by defining the facetting relationship of the interesting variable against the rest of the data, `state~.`, instead of everything versus variable, `~state`.  
+  - Try removing the `space` option and see how the plot changes.   
+  - What happens if you set `scales = "free"`? Do you see why including a free scale for 'y' might be misleading for readers?   
+  - Do you also see how it is handy to create a new plot object?   
+
+Instead of having horizontally aligned columns in `facet_grid`, we can generate vertically aligned columns by defining the facetting relationship of the interesting variable against the rest of the data, `state~.`, instead of everything versus variable, `~state`.   
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
 # Create plot object
