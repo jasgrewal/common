@@ -3,13 +3,13 @@ title: "Modifying ggplot objects - intermediate tutorial"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -137,6 +137,7 @@ We will also remove the annoying 'grey' colour around the line by setting `fill=
 # Define all legend modifications in 1 guides() statement
 multiline_labels <- scatter_popbw + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill=NA), title="American State", nrow=2)) 
 
+
 horiz_labels <- scatter_popbw + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill=NA), title="American State", direction = "horizontal", nrow=2, label.position="bottom")) 
 ```
 
@@ -179,6 +180,7 @@ Instead of having horizontally aligned columns in `facet_grid`, we can generate 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
 # Create plot object
 g1_fg_clean_vertical <- multiline_labels + ggtitle("Compact vertical Facet Grid plot") + facet_grid(state~., scales = "free_x", space="free_x")
+
 # Print plot object
 g1_fg_clean_vertical
 ```
@@ -272,7 +274,12 @@ base_plt + theme_economist() + scale_colour_economist()
 Have fun! 
 
 # Exercises  
-Can you trace back what the expanded plot definition in `base_plt` object is. That is, rewrite base_plt as the ggplot() definition it stands for.  
+Can you trace back what the expanded plot definition in `base_plt` object is? That is, rewrite base_plt as the ggplot() definition it stands for.  
+
+Solution:  
+```{r, eval=FALSE, echo=TRUE}
+ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5, ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites") + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill=NA), title="American State", nrow=2))  + ggtitle("Compact vertical Facet Grid plot") + facet_grid(state~., scales = "free_x", space="free_x") + geom_point(data=midwest[, c("popwhite", "popblack")], colour="grey", alpha=0.2) + theme(plot.title=element_text(size=22, face="italic", hjust=0.5), legend.position = "bottom")
+```
 
 # Take-aways   
 1. Saving ggplots as objects  
