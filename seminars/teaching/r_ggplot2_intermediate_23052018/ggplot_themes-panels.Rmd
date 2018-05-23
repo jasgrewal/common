@@ -43,7 +43,7 @@ Let us take a quick look at the plot script for the last ggplot figure we genera
 # Get data we were working with earlier  
 data("msleep", package = "ggplot2")
 # Plot the ggplot  
-ggplot(msleep, aes(x=vore, y=sleep_rem)) + geom_point(alpha=0.5) + stat_summary() + theme_minimal()   + theme(text = element_text(size=12)) + ggtitle("I changed the title") + theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 45, hjust = 1)) + labs(x="-vore", y="REM sleep") + facet_wrap(~conservation, ncol=2)
+ggplot(msleep, aes(x=vore, y=sleep_rem)) + geom_point(alpha=0.5) + stat_summary() + theme_minimal()   + theme(text = element_text(size=12)) + ggtitle("I changed the title") + theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 45, hjust = 1)) + labs(x="-vore", y="REM sleep") + facet_wrap(~conservation, ncol=3)
 ```
 
 There are 5 key points in this long line of code:   
@@ -119,7 +119,7 @@ Maybe I want to compare the population of whites against black people in the dif
   - This can be modified with the `method` option in `stat_smooth()`  
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
 # Define plot 
-scatter_popbw <- ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5, ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites")
+scatter_popbw <- ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5 ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites")
 # Print plot
 scatter_popbw
 ```
@@ -304,7 +304,7 @@ ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_po
 
 
 2. Can you create the following plot?.  
-```{r, eval=TRUE, echo=FALSE, fig.width=7, fig.height=6}
+```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=6}
 ggplot(midwest, aes(x=percollege, y=percbelowpoverty, colour=state)) + theme_solarized(base_size=12) + stat_smooth(method='lm') + geom_point(alpha=0.5) + labs(x="Percent college educated", y="Percentage below poverty line") + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill="yellow"), title="American State", ncol=2))  + ggtitle("Does being in a metro area influence poverty?") + facet_grid(state~ifelse(inmetro==0, "Not in metro", "In metro"), scales = "free_x", space="free") + theme(plot.title=element_text(size=20, face = "bold.italic", hjust=1), legend.position = "top") 
 ```
 
@@ -314,6 +314,17 @@ ggplot(midwest, aes(x=percollege, y=percbelowpoverty, colour=state)) + theme_sol
   - I may not have used a **loess** fit    
   
 Solution will be covered in tutorial (time allowing), and posted here after tutorial.  
+
+# Additional tid-bits  
+Towards the end of the tutorial I was asked how to add 'bee-swarm plots' with boxplots. If that's your jam, here is one way to do it:   
+
+```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=6}
+ggplot(midwest, aes(x=state, y=log2(popdensity))) + geom_boxplot() + geom_dotplot(binaxis="y",stackdir="center", alpha=0.3, dotsize = 0.3) + theme_bw()
+```
+
+Another way to do it is using the [ggbeeswarm package](https://github.com/eclarke/ggbeeswarm), if you want other specialized types of 'swarms'.   
+
+You can also learn about other cool types of ggplot functions and figures [using this cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)  
 
 # Take-aways   
 1. Saving ggplots as objects  
