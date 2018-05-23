@@ -1,0 +1,6 @@
+1-beta = power
+Ny, Nx => sample size
+variance = s^2
+
+T = (Uy - Ux)/(hatted_Sp)
+

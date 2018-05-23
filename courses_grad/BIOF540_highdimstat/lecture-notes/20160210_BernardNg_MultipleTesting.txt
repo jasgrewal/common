@@ -1,0 +1,8 @@
+Step up procedure: Sorts p values in descending order, compare threshold at each p value point, once we find the threshold p-value, all hypotheses with p values below that will be considered significant (identically, anything upwards = true nulls). Controls Family Wise Error Rate strongly. 
+	- but does this give a gain in sensitivity? non...
+
+FDR: Instead of controlling FWER, control false positives over the number of false detections you're making. Since number of FP is unknown, aim instead to reduce the expectation of false positives. 
+
+Max-T permutation test: Strongly controls FWER! 
+
+Brain decoding (34): Use Max-T permutation test

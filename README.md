@@ -1,6 +1,8 @@
 # Contents  
 ## Tutorials  
 - 23rd May, 2018 : [Modifying ggplot objects - intermediate tutorial](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.html)  
+	- [PDF](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.pdf)  
+	- [R Script](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.R)  
 - 8th Nov, 2017 : [Introduction to ggplot](seminars/teaching/r_ggplot2_beginners_08112017/ggplot_intro.pdf)  
 - 14th June, 2017 : [Introduction to DESeq2 - beginners/intermediate](seminars/teaching/r_deseq2_beginners_14062017/scripts/Rtutorial_RNAseq_clustering_DE_ILS_ISS.pdf)  
   - Supporting data files : [ILS_ISS_saline_HTSeq_nostats.txt](seminars/teaching/r_deseq2_beginners_14062017/scripts/ILS_ISS_saline_HTSeq_nostats.txt), [ILS_ISS_saline_HTSeq_nostats_covars.txt](seminars/teaching/r_deseq2_beginners_14062017/scripts/ILS_ISS_saline_HTSeq_nostats_covars.txt)
