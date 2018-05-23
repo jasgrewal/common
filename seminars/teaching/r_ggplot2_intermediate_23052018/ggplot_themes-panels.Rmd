@@ -7,7 +7,7 @@ output:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
-    toc_float: true
+    toc_float: yes
   pdf_document:
     toc: yes
     toc_depth: '3'
@@ -110,15 +110,18 @@ Notice how the y-axis has such a wide range but most of our data is in a tiny ra
 - In the next parts of the tutorial we will be modifying things like panels, font size, colour, panel colour, grid-lines - since most of our ggplot will retain the same structure (we will only be **stylizing** aspects of it), I will 'initialize' each new exploratory plot as a separate object, using `obj_name <- ggplot(something something)` . This comes in handy if we want to keep adding new 'geometric objects' on top of our original ggplot figure, without copying the code every single time.   
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=3}
-g1_popwhite <- ggplot(midwest, aes(fill=state, x=log2(popdensity))) + geom_density(alpha=0.4) + theme_minimal(base_size=13) +  labs(x="Log transformed - Population Density", y="Proportion of counties")
-plot(g1_popwhite)
+g1_poplog <- ggplot(midwest, aes(fill=state, x=log2(popdensity))) + geom_density(alpha=0.4) + theme_minimal(base_size=13) +  labs(x="Log transformed - Population Density", y="Proportion of counties")
+plot(g1_poplog)
 ```
 
 Maybe I want to compare the population of whites against black people in the different counties of all states?  
 - We can fit a 'loess' curve to see specific trends for different states, with the `stat_smooth()` element.  
   - This can be modified with the `method` option in `stat_smooth()`  
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
+# Define plot 
 scatter_popbw <- ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5, ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites")
+# Print plot
+scatter_popbw
 ```
 
 Try the following:  
@@ -137,7 +140,7 @@ What did we do? While there are several attributes we can modify using `guide_le
 We can, ofcourse, go ahead and change other things for our colour legend.  
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=5}
-# First I'll save the new plot 
+# First I'll save the previous plot 
 scatter_goodalpha <- scatter_popbw + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2)))
 # Then I'll add another 'guides()' element with a different set of attributes to modify
 scatter_goodalpha + guides(colour=guide_legend(title="American State"))
@@ -152,6 +155,8 @@ multiline_labels <- scatter_popbw + guides(colour = guide_legend(override.aes = 
 
 
 horiz_labels <- scatter_popbw + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill=NA), title="American State", direction = "horizontal", nrow=2, label.position="bottom")) 
+
+multiline_labels
 ```
 
 
@@ -207,7 +212,7 @@ g1_fg_clean_vertical_pov <- g1_fg_clean_vertical + geom_point(data=midwest[midwe
 g1_fg_clean_vertical_pov
 ```
 
-> Does this seem to suggest that in areas where the relative proportion of blacks is lower than the whites, the percentage of people below poverty line is relatively higher? - find out by doing grad school!  
+> Does this seem to suggest that high poverty is found in areas where the relative white population is lower than the expected white population based on state trends? - find out by doing grad school!  
 
 What did we do here? We took our pre-existing plot where everything had been plotted. We then specified only a *part* of our original dataset to be passed to a new geometric function, a `geom_point()`, and we set the `colour="black"` for all the points that this `geom_point()` is plotting.   
 
@@ -288,12 +293,27 @@ base_plt + theme_economist() + scale_colour_economist()
 Have fun! 
 
 # Exercises  
-Can you trace back what the expanded plot definition in `base_plt` object is? That is, rewrite base_plt as the ggplot() definition it stands for.  
+1. Can you trace back what the expanded plot definition in `base_plt` object is? That is, rewrite base_plt as the ggplot() definition it stands for.  
+
 
 Solution:  
 ```{r, eval=FALSE, echo=TRUE}
+# Trace back to all objects defined  
 ggplot(midwest, aes(x=log2(popblack), y=log2(popwhite), colour=state)) + geom_point(alpha=0.5, ) + theme_bw(base_size=11) + stat_smooth() + labs(x="Log transformed - Population of Blacks", y="Log transformed - Population of Whites") + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill=NA), title="American State", nrow=2))  + ggtitle("Compact vertical Facet Grid plot") + facet_grid(state~., scales = "free_x", space="free_x") + geom_point(data=midwest[, c("popwhite", "popblack")], colour="grey", alpha=0.2) + theme(plot.title=element_text(size=22, face="italic", hjust=0.5), legend.position = "bottom")
 ```
+
+
+2. Can you create the following plot?.  
+```{r, eval=TRUE, echo=FALSE, fig.width=7, fig.height=6}
+ggplot(midwest, aes(x=percollege, y=percbelowpoverty, colour=state)) + theme_solarized(base_size=12) + stat_smooth(method='lm') + geom_point(alpha=0.5) + labs(x="Percent college educated", y="Percentage below poverty line") + guides(colour = guide_legend(override.aes = list(alpha = 1, size=2, fill="yellow"), title="American State", ncol=2))  + ggtitle("Does being in a metro area influence poverty?") + facet_grid(state~ifelse(inmetro==0, "Not in metro", "In metro"), scales = "free_x", space="free") + theme(plot.title=element_text(size=20, face = "bold.italic", hjust=1), legend.position = "top") 
+```
+
+*Hints*:  
+  - We are comparing 'percbelowpoverty' with 'percollege'  
+  - The Metro variable is 'inmetro'; look up the usage of `ifelse()`  
+  - I may not have used a **loess** fit    
+  
+Solution will be covered in tutorial (time allowing), and posted here after tutorial.  
 
 # Take-aways   
 1. Saving ggplots as objects  
