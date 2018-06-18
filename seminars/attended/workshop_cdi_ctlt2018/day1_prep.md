@@ -76,7 +76,25 @@ Appreciate basic facts/terms/concepts; apply them to novel, concrete situations 
 	- Creating group agreements / debates  
 	- Common interests?  
 
+## 3 Stages of the Design Process  
+### What do we want the students to learn?  
+- Why's it worthy of understanding?   
 
+### How'll we (and they!) know they've learnt it?  
 
+### How'll we help them learn it?  
+- Big ideas can act as conceptual anchors  
+	- These big ideas can be concepts/ themes / debates / perspective / paradox / theory / principle / assumption  
+
+**Enduring Understanding** : Concept you want them to appreciate fully  
+**Essential Questions**: What questions help them evalaute they have enduring understanding of the statement above? Questions that may step from the idea or lead to the idea?  
+
+# Solid ideas  
+- 'Coffee sessions': Am I doing ok? Do I belong? Who are my people?  
+- Who are your students, without the doing?   
+	- What is the *real why* of my discipline?  
 - End of semester activity works towards a common theme (teach your grandma / podcast / ted talks / interviews)  
+- Do *not* use the word Understanding in your Learning outcomes  
+	- Understanding is different Knowledge  
+	- Understanding yields self-knowledge, perspective, and empathy (being able to understand biases, form own opinins etc)  
 
