@@ -28,24 +28,43 @@ Special Topics in Bioinformatics
 - Assembly    
 - Reference genomes  
 - Variant analysis  
-- Technical vs Biological artefacts   
-
+- In vivo experiments for biological concepts  
+- Data visualization and interpretation  
 ## Themes  
-- Studying disease using computational methods   
+- Understanding disease complexity using computational methods  
+	- Persoanlized medicine  
+	- Rare or multigenic diseases   
 - Types of biological material  
 - Molecular basis of disease  
 - Drug development  
 - Population Statistics and predictive modelling (?)  
+- Big Data  
+- Data integration  
+
+[See 2013 paper on big ideas in biofx](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3615659/)  
 
 ## Issues or Debates  
+- What do we study? (DNA/RNA/Methylation etc)  
+- What is 'junk DNA' ([ENCODE debate](https://www.nature.com/articles/509137e))  
+- Who is a bioinformatician? [Stakeholders paper, 2004](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2047326/)  
+- What can the genome tell us? When is it 'too dangerous' to allow that data to be in the public domain?  
+- Access to findings from bioinformatics projects  
+	- Generation of, and access to publically available data  
 
 ## Problems or Challenges  
+- Tissue Heterogeneity  
+- Technical artefacts  
+- Policies and frameworks  
 
 ## Processes  
+- Literature Review  
+- Connecting Ideas  
+- Integrating themes  
 
 ## Theories  
 
 ## Paradoxes  
+- Does bioinformatics yield hypotheses or do hypotheses propell bioinformatics research?  
 
 ## Assumptions or Perspectives  
 - WGS is more relevant than WXS  
