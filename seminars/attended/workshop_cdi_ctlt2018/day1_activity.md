@@ -40,6 +40,7 @@ Special Topics in Bioinformatics
 - Population Statistics and predictive modelling (?)  
 - Big Data  
 - Data integration  
+	- GWAS benefits and harms?  
 
 [See 2013 paper on big ideas in biofx](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3615659/)  
 
@@ -54,7 +55,9 @@ Special Topics in Bioinformatics
 ## Problems or Challenges  
 - Tissue Heterogeneity  
 - Technical artefacts  
-- Policies and frameworks  
+	- What is the meaning of a 'gold standard' analytical pipeline in bioinformatics  
+- Translating research into the clinic  
+	- What counts as substantial proof of a new discovery in bioinformatics?  
 
 ## Processes  
 - Literature Review  
@@ -62,12 +65,14 @@ Special Topics in Bioinformatics
 - Integrating themes  
 
 ## Theories  
+- High resolution molecular data can answer all our questions about life  
+	- Lol, too controversial?  
 
 ## Paradoxes  
 - Does bioinformatics yield hypotheses or do hypotheses propell bioinformatics research?  
 
 ## Assumptions or Perspectives  
 - WGS is more relevant than WXS  
-- Microarrays are outdated  
-- OLC approach is the best assembly method  
+- [abc methodology] is outdated (are they? What can we get out of them?)   
+- [xxx] approach is the best assembly method (or other strongly prevalent computational approaches in subtopics)  
 
