@@ -44,4 +44,39 @@ Appreciate basic facts/terms/concepts; apply them to novel, concrete situations 
 
 - Requiring uncoverage?  
 
+# Class Notes  
+- What to do when students don't know what they don't know?  
+- How do we ensure learning outcomes are met in a small class size?  
+- How do we work with students that have very different motivations for taking the course?  
+
+## Day 1's learning goals   
+- Big Ideas for the course  
+	- Learning context and situational factors that are relevant to you, the learner, and the curriculum  
+	- *How will students learn?* is the only thing you really have influence over as an instructor  
+		- Have the students feel challenged (learning something!)  
+		- ** What are your students texting their friends WHILE they're in class? **
+	- Use student diversity as an asset, not a challenge  
+	- What are the students' needs? Where are they headed?  
+
+## Notes from Class Discussion  
+
+- Peer review and open results sharing  
+	- How is the feedback imbibed by the students (is there dialogue? a rubric to refer to? or is it just a mark?)  
+	- Sharing outcomes openly can impact students if feedback from public is negative. Best to keep it within the scope of the class?  
+- Discussing controversial topics  
+	- The style of the activity can impact what topics students feel comfortable confronting.  
+	- The background knowledge can also influence what they find controversial vs not.  
+	- Easy grade vs actual challenging task (need to balance this as an instructor).  
+## Student Diversity Integration  
+- We seek: Belonging + Relevance + Diversity of Experience  
+
+### Belonging  
+- The student sees themselves in the presence in the class  
+	- Letting them choose readigns vs providing shared readings  
+	- Creating group agreements / debates  
+	- Common interests?  
+
+
+
+- End of semester activity works towards a common theme (teach your grandma / podcast / ted talks / interviews)  
 
