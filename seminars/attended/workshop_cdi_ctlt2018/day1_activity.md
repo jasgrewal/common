@@ -76,3 +76,5 @@ Special Topics in Bioinformatics
 - [abc methodology] is outdated (are they? What can we get out of them?)   
 - [xxx] approach is the best assembly method (or other strongly prevalent computational approaches in subtopics)  
 
+# Concept maps for these ideas  
+
