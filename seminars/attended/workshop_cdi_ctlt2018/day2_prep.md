@@ -12,6 +12,23 @@
 *Cognitive Domain*: If writing to 'know', then include exercises to explain same information to different domains   
 *Affective Domain*: If understanding distortion/biases, then include exercises including critical feedback on model being used  
 
+2. Assessments  
+Informal checks -> Observations + dialogues -> Tests, quizzes -> Academic prompts/projects -> Performance tasks/projects  
+**If I'm expecting a high level of performance,** am I actually building them up for it?  
+
+##Assessment OF, FOR, and AS learning  
+- Summative Assessment   
+	- Two Stage Exam (Individual component, and then same questions discussed/debated as a group of 4-6). Keeping individual score if it is higher than group score.  
+
+- Formative Assessment
+
+
+[Creating Rubrics](https://www.cmu.edu/teaching/assessment/assesslearning/rubrics.html)  
+- Single Point Rubric, [like this](https://www.cultofpedagogy.com/single-point-rubric/)   
+- Using rubrics is a way of giving detailed feedback.  
+   
+
+
 ### Improving Learning Outcomes  
 KNOWLEDGE:  
 1) Identify the difference between a bioinformatics specialty and a set of computational algorithms
@@ -36,10 +53,15 @@ Evaluation:
 	- Assessments in the middle of the course  
 	- Tying in the course/resistant material to other courses or the program as a whole  
 	- Understanding the behaviour and patterns of the students (reading the room)  
-- Levels of belief about learning (content based resistance vs world view based resistance)   
+- Is there a drawback to using a rubric as a means of peer feedback?  
 
 ### Nice succinct concepts for learning assessment  
+- Levels of belief about learning (content based resistance vs world view based resistance)  
 - Unconsciously incompetent vs Consciously incompetent vs Consciously competent vs Unconsciously competent
+- Checking in with students regularly, empathize with tough tasks and eventually get to point in course where we overcome the resistance/confusion together. Getting to that point is crucial though!  
+- IRL you will never be locked in a room for 3 hours and be judged on how you perform a task during that time.  
+	- **Give students similar opportunities** to practise, feedback, revise, and perform  
+- Assessmed *OF*, *FOR*, and *AS* learning (summative and formative)  
  
 # Solid ideas   
 - Having a Pre-Survey: Starting the course with assessing student skills (what is the skillset in the room, what do they know, what are the gaps?)  
@@ -55,4 +77,7 @@ Evaluation:
 - For the writing assignment (shortening summary iteratively)  
 	- Make target writing for same purpose, to *different audience*  
 	- Think about justifying style and language for target audience  
+- Informal assessment:
+	- Muddiest point / what did I learn best from today's lecture  
+	- Peer Feedback based on a rubric for every Field Review (we don't see it, they go to the student directly)  
 
