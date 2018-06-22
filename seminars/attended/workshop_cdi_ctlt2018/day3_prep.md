@@ -37,6 +37,9 @@
 ## Notes on Informal Learning and Assessments   
 - Exit Ticket strategy for confusing days/topics   
 - Peer Feedback based on a rubric for every Field Review (we don't see it, they go to the student directly)   
+	- Ask presenters to say what they'd explicitly like feedback on (can be done for their 2nd presentation, as they'll know what things they tried to improve on, and what they feel they'd want more feedback on)  
+	- **Guide class on giving CONSTRUCTIVE feedback, not nice or supportive - what kind of feedback is helpful**  
+	- Ask presenters to submit quick summary update to TA from their peer feedback forms / do visual check on submissions being filled by class before giving them to the presenter      
 - In class discussion has no right or wrong answer, and imbibe the quality of the discussion into the final grade instead.  
 
 # Solid ideas  
@@ -48,6 +51,12 @@
 	- week 2-3: Reading papers and parsing them (emphasis on peer feedback - summarize at end of week 3)   
 		- Use powerpoints for 1st week  
 		- Explain by yourself for 2nd week (same paper)   
+		- *Thoughts*: Giving them guiding exercise sheet (structured guide) with specific questions related to specific parts of the paper, answer this specific questions.  
+			- Give them a structured way to answer, what it means to parse a paper  
+			- Then give a new paper, what 5 questions would you ask yourself about that paper  
+			- Find online resources that can help you model this  
+			- Think about metacognitive questions/leads that can be used by students who are bored by this already  
+			- Or have this be a preclass test to evaluate what the group knows?   
 	- week 4-10: Field Reviews and Presentations  
 		- Every week's FR presenters pair with last week's one to identify one common method or theme that is shared between their topic and the prev week's.  
 		- On the 7th week of the FRs (overall week 10), have the last pair give a theme link, and have week 1's FR people work with last week's FR people to give a summary of all the links covered in the last 7 weeks    
@@ -55,4 +64,5 @@
 
 - *Mind Maps*: With a marker, students can go around looking at what others have done and mark what they find relevant/puzzling  
 
+- Give a horrible presentation, and then have the class deconstruct what went wrong, how we would change it  
 
