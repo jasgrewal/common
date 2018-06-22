@@ -9,8 +9,10 @@
 		- Students summarize for different target audiences (Their PI, colleague in class, grandparent, uncle/aunt, elementary school)  
 		- Followed by peer to peer review? Or instructor assesses at every submission point.  
 		- Students think about justifying style and language for target audience.  
+
 2. Identify and communicate the core principles of bioinformatics specialties, and distinguish them from computational algorithms.  
 	- Field Review presentations + current paper presentations (Weeks 4-10)   
+	- Class Pop-Quizzes (5-10 minutes) with questions directly testing these aspects (Ties with Outcome 4)  
 3. Identify the types of biological data that can be processed within bioinformatics research areas and be able to enumerate the merits and limitations of each.   
 	- **UNSURE** Embedded in specialties  
 	- Mind Maps identifying shared themes between consecutive weeks on specialties' field reviews  
@@ -25,6 +27,12 @@
 
 5. Outline and defend a typical bioinformatics based analytical pipeline, integrating key specialties and methods (The real *WHY* of the discipline).   
 	- Group presentation (Weeks 11-12) on 'cool paper' (see Objective 3's point related to this)  
+
+## Other questions  
+- Are the assessments for reading a scientific paper sufficiently structured or do they entail a lot more work than I think?  
+- For Outcome 2, do I need to do more work to assess or let the peripheral activities build it?  
+- Move participation/discussion to Online Threads rather than in-class only (still keep in-class component but let that simply be voicing thoughts?)  
+- More active voice of instructor needed for a course that has aims like these?  
 
 ## Notes on Informal Learning and Assessments   
 - Exit Ticket strategy for confusing days/topics   
