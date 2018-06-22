@@ -1,11 +1,25 @@
 # Tying things together  
 ## Course Level Learning Outcomes vis a vis assessment  
 1. Read a scientific paper in order to identify the main take-aways, critically study the methods, and evaluate the results.   
-2. Identify and explain the core principles of bioinformatics specialties, and distinguish them from computational algorithms.   
-3. Identify the types of biological data that can be processed within bioinformatics research areas and be able to enumerate the merits and limitations of each.   
-4. Demonstrate knowledge of how data that may arise from 1st, 2nd, and 3rd generation sequencing methodologies, and identify the advantages/limitations of each.    
-5. Outline and defend a typical bioinformatics based analytical pipeline, integrating key specialties and methods.   
+	- 2 stage reading and interpretation of paper activity (make 2 stage exam be peer learning instead), worth 1-2% of grade, Week 1  
+	- **UNSURE** Presenting papers to peers, trial activity for Weeks 2-3 (use powerpoints, and then once without any aids)  
+		- Accompanied by single point rubrics filled out by peers  
+	- Individual presentations on published papers, with peer and instructor feedback provided (weeks 4-10)  
 
+2. Identify and explain the core principles of bioinformatics specialties, and distinguish them from computational algorithms.  
+	- Field Review presentations + current paper presentations (Weeks 4-10)   
+3. Identify the types of biological data that can be processed within bioinformatics research areas and be able to enumerate the merits and limitations of each.   
+	- **UNSURE** Embedded in specialties  
+	- Mind Maps identifying shared themes between consecutive weeks on specialties' field reviews  
+	- Group presentation (Weeks 11-12) on 'cool paper' that is centered around an instructor specified theme  
+		- Theme imbues computation and biological parts together, or requires integration of multiple specialties or data types   
+4. Demonstrate knowledge of how data that may arise from 1st, 2nd, and 3rd generation sequencing methodologies, and identify the advantages/limitations of each.    
+	- Class Discussions  
+	- Class Pop-Quizzes (5-10 minutes) with questions directly testing these aspects   
+	- Exit Ticket strategry to track learning and areas lacking confusion  
+
+5. Outline and defend a typical bioinformatics based analytical pipeline, integrating key specialties and methods.   
+	- Group presentation (Weeks 11-12) on 'cool paper' (see Objective 3's point related to this)  
 
 # Solid ideas  
 - Splitting course into units  
