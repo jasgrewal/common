@@ -3,3 +3,9 @@
 - "*conducting the discussion in such a way that the progress is, and is seen to be, partly the responsibility of the pupils, and yet is kept on track with the larger aims in view.*"  
 -"*pupils are given some training to guide them to emphasise reasons rather than assertions*"  
 
+[Challenging student misconceptions about learning](https://www.psychologicalscience.org/observer/improving-classroom-performance-by-challenging-student-misconceptions-about-learning)  
+- "*As a final question on the first exam, ask students to write down an honest estimate of the percentage of questions they believe they got right, from 0 to 100%. When discussing exam results, prepare a scatterplot of their estimated scores against their actual scores. Students with good metacognition should fall close to the diagonal, but virtually the entire class will show an overestimate of their performance, and this overestimate will be larger for students with lower scores. *"  
+
+
+
+
