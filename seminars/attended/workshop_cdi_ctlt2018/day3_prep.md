@@ -7,20 +7,29 @@
 	- Individual presentations on published papers, with peer and instructor feedback provided (weeks 4-10)  
 	- **UNSURE** Iterative summarization of assigned papers over the course of 12 weeks (2 pages - 1 page - 0.5 page - 2 sentences)  
 		- Students summarize for different target audiences (Their PI, colleague in class, grandparent, uncle/aunt, elementary school)  
+		- Followed by peer to peer review? Or instructor assesses at every submission point.  
+		- Students think about justifying style and language for target audience.  
 2. Identify and communicate the core principles of bioinformatics specialties, and distinguish them from computational algorithms.  
 	- Field Review presentations + current paper presentations (Weeks 4-10)   
 3. Identify the types of biological data that can be processed within bioinformatics research areas and be able to enumerate the merits and limitations of each.   
 	- **UNSURE** Embedded in specialties  
 	- Mind Maps identifying shared themes between consecutive weeks on specialties' field reviews  
+		- Field Reviewers of consecutive weeks discuss and identify shared link between current and previous week's topics, And then highlight it either as a group summary shared online previous to the class ( **UNSURE** ) or in 10 minutes prior to beginning of class.   
 	- Group presentation (Weeks 11-12) on 'cool paper' that is centered around an instructor specified theme  
-		- Theme imbues computation and biological parts together, or requires integration of multiple specialties or data types   
+		- Theme imbues computation and biological parts together, or requires integration of multiple specialties or data types  
+		- End of semester activity works towards a common theme (teach your grandma / podcast / ted talks / interviews)   
 4. Demonstrate knowledge of how data that may arise from 1st, 2nd, and 3rd generation sequencing methodologies, and identify the advantages/limitations of each.    
 	- Class Discussions  
 	- Class Pop-Quizzes (5-10 minutes) with questions directly testing these aspects   
 	- Exit Ticket strategry to track learning and areas lacking confusion  
 
-5. Outline and defend a typical bioinformatics based analytical pipeline, integrating key specialties and methods.   
+5. Outline and defend a typical bioinformatics based analytical pipeline, integrating key specialties and methods (The real *WHY* of the discipline).   
 	- Group presentation (Weeks 11-12) on 'cool paper' (see Objective 3's point related to this)  
+
+## Notes on Informal Learning and Assessments   
+- Exit Ticket strategy for confusing days/topics   
+- Peer Feedback based on a rubric for every Field Review (we don't see it, they go to the student directly)   
+- In class discussion has no right or wrong answer, and imbibe the quality of the discussion into the final grade instead.  
 
 # Solid ideas  
 - Splitting course into units  
