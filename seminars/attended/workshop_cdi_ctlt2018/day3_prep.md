@@ -5,8 +5,9 @@
 	- **UNSURE** Presenting papers to peers, trial activity for Weeks 2-3 (use powerpoints, and then once without any aids)  
 		- Accompanied by single point rubrics filled out by peers  
 	- Individual presentations on published papers, with peer and instructor feedback provided (weeks 4-10)  
-
-2. Identify and explain the core principles of bioinformatics specialties, and distinguish them from computational algorithms.  
+	- **UNSURE** Iterative summarization of assigned papers over the course of 12 weeks (2 pages - 1 page - 0.5 page - 2 sentences)  
+		- Students summarize for different target audiences (Their PI, colleague in class, grandparent, uncle/aunt, elementary school)  
+2. Identify and communicate the core principles of bioinformatics specialties, and distinguish them from computational algorithms.  
 	- Field Review presentations + current paper presentations (Weeks 4-10)   
 3. Identify the types of biological data that can be processed within bioinformatics research areas and be able to enumerate the merits and limitations of each.   
 	- **UNSURE** Embedded in specialties  
