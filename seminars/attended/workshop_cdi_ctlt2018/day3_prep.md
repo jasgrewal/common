@@ -33,7 +33,7 @@
 - For Outcome 2, do I need to do more work to assess or let the peripheral activities build it?  
 - Move participation/discussion to Online Threads rather than in-class only (still keep in-class component but let that simply be voicing thoughts?)  
 - More active voice of instructor needed for a course that has aims like these?  
-
+- Is this structure flexible to class size or will it be impacted drastically by class size of 8 vs 20
 ## Notes on Informal Learning and Assessments   
 - Exit Ticket strategy for confusing days/topics   
 - Peer Feedback based on a rubric for every Field Review (we don't see it, they go to the student directly)   
