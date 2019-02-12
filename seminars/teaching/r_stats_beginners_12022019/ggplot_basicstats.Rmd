@@ -24,19 +24,16 @@ height_basic=6
 # Getting started  
 This tutorial assumes you know how to load data into an RStudio session, view a dataframe and explore columns/rows of a dataframe in R. Knowing how to visualize data as scatterplots will also be helpful, though not essential.      
 
-We will be using a package called [ggpubr](https://cran.r-project.org/web/packages/ggpubr/index.html) today.  
-> Ggpubr is a graphing package, that lets you create publication ready ggplots, and automatically add significance levels to your figures.   
+We will be using two packages - [reshape2](https://cran.r-project.org/package=reshape2) and [ggpubr](https://cran.r-project.org/web/packages/ggpubr/index.html).    
+  - reshape2 is a package with 2 main functions, `melt` and `dcast`. It is helpful for flexibly reshaping your data.  
+  - ggpubr is a graphing package, that lets you create publication ready ggplots, and automatically add significance levels to your figures.    
+Let us also load up ggplot2 into our current environment, just in case we want to make pretty plots.    
 
-```{r opts, eval=FALSE}
-
-```
-
-Let us also load up ggplot2 into our current environment, just in case we want to make pretty plots.   
 ```{r, eval=TRUE}
-# If you don't have ggplot2 installed already  
-# install.packages("ggplot2")
+# If you don't have a package installed already  
+# install.packages("packagename")
 # Otherwise, load it into the environment
-require(ggplot2)
+library(ggplot2)
 library(ggpubr)
 library(reshape2)
 ```
@@ -89,7 +86,7 @@ Over 50% of the genes across 5 samples are missing. We can deal with this either
 data_df_clean <- data_df[complete.cases(data_df), ]
 ```
 
-After this, we have `nrow(data_df_clean)` samples and `ncol(data_df_clean)` genes. We can do a quick 'smell-test' on this data, by using the dataframe function `summary()`. This function calculates summary statistics for each column in the dataframe. We can transpose the dataframe so that the samples become columns (instead of rows).  
+After this, we have `r nrow(data_df_clean)` samples and `r ncol(data_df_clean)` genes. We can do a quick 'smell-test' on this data, by using the dataframe function `summary()`. This function calculates summary statistics for each column in the dataframe. We can transpose the dataframe so that the samples become columns (instead of rows).  
 
 ```{r, eval=FALSE, echo=TRUE}
 summary(t(data_df_clean))
@@ -110,7 +107,7 @@ colnames(data_compact_df) = c("Gene", "Sample", "Expression")
 \pagebreak  
 
 ## Dealing with outliers   
-ggplot has a handy geom_object (remember these from the ggplot tutorial?). The `stat_summary()` method allows us to plot a pointrange plot showing the mean and standard error.  
+ggplot has a handy geom_object (remember these from the ggplot tutorial?) for summary statistics. The `stat_summary()` (or `geom_summary()`) method allows us to plot a pointrange plot showing the mean and 2 x standard deviation.      
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
 ## stat_summary() defaults to the categories defined on the x axis, and summarizes the numeric spread on the y-axis
@@ -118,9 +115,24 @@ ggplot has a handy geom_object (remember these from the ggplot tutorial?). The `
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary() + theme_bw(base_size=14) + coord_flip()
 ```
 
+
+```{r, eval=FALSE, echo=TRUE}
+## stat_summary with 1 Standard Deviation around mean
+ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary(fun.args = list(mult = 1)) + theme_bw(base_size=14) + coord_flip()
+```
+
+**Segue**:  Another ggplot method is `stat_smooth()` (or `geom_smooth()`). This is helpful for plotting a line of best fit on your data. When you may want to compare this with a standard straight line, `geom_abline` is (quite helpful)[https://www.rdocumentation.org/packages/ggplot2/versions/1.0.1/topics/geom_abline].   
+
+```{r, eval=TRUE, echo=TRUE, fig.width=4, fig.height=4}
+## geom_point to visualize the scatterplot  
+## stat_smooth to fit the blue line with confidence intervals in grey
+## geom_abline fits an x=y line by default (intercept=0, slope=1).  
+ggplot(data_df_clean, aes(x = BRCA1, y = PIK3CA)) + geom_point() + stat_smooth() + geom_abline(colour="red", size=2) + theme_bw(base_size=14)
+```
+
 \pagebreak  
 
-However, we have an anomalous sample! The sample `PDX1328` has readings that lie extremely outside the range of the rest of the samples. We can see this more clearly with a boxplot version of the datapoints, plotted using `geom_boxplot()`
+Looking back at our stat_summary figure, we have an anomalous sample! The sample `PDX1328` has readings that lie extremely outside the range of the rest of the samples. We can see this more clearly with a boxplot version of the datapoints, plotted using `geom_boxplot()`.  
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
 ```
@@ -221,7 +233,7 @@ my_comparisons <- list( c("5", "6"), c("7", "8"), c("6", "8"), c("7", "9"))
 ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_point(alpha=0.5) + stat_compare_means(comparisons = my_comparisons, method="t.test") + theme_bw(base_size=14)
 ```
 
-You can also calculate the significance of difference in means between all groups relative to a reference, like so:  
+You can calculate the significance of difference in means between all groups relative to a reference, like so:  
 ```{r, eval=TRUE, echo=TRUE, fig.width=9, fig.height=4}
 ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_point(alpha=0.5) + stat_compare_means(method="t.test", ref.group = "5") + theme_bw(base_size=14)
 ```
@@ -239,6 +251,7 @@ ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_po
 \pagebreak  
 
 # Additional Resources  
+[Understanding reshape2, wide and long formats](https://seananderson.ca/2013/10/19/reshape/)  
 [Outlier detection with R](http://www.questionflow.org/2017/12/26/combined-outlier-detection-with-dplyr-and-ruler/)  
 [Detailed lecture on data cleanup with R](https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf)  
 [Using ggpubr to calculate significance](http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/76-add-p-values-and-significance-levels-to-ggplots/)  
