@@ -1,0 +1,293 @@
+---
+title: "Data cleanup and summary statistics with R"
+author: "Jasleen Grewal"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    latex_engine: xelatex
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+header-includes: \usepackage{color}
+---
+
+```{r, echo=FALSE, eval=TRUE}
+library(knitr)
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=80),tidy=TRUE)
+height_basic=6
+```
+
+
+# Getting started  
+This tutorial assumes you know how to load data into an RStudio session, view a dataframe and explore columns/rows of a dataframe in R. Knowing how to visualize data as scatterplots will also be helpful, though not essential.      
+
+We will be using a package called [ggpubr](https://cran.r-project.org/web/packages/ggpubr/index.html) today.  
+> Ggpubr is a graphing package, that lets you create publication ready ggplots, and automatically add significance levels to your figures.   
+
+```{r opts, eval=FALSE}
+
+```
+
+Let us also load up ggplot2 into our current environment, just in case we want to make pretty plots.   
+```{r, eval=TRUE}
+# If you don't have ggplot2 installed already  
+# install.packages("ggplot2")
+# Otherwise, load it into the environment
+require(ggplot2)
+library(ggpubr)
+library(reshape2)
+```
+
+\pagebreak  
+
+R provides excellent support for statistical analysis. The data we will be working with is cell-line expression data from the LINCS1000 dataset. I have adapted this dataset for our use, which is available at the same spot you found this tutorial. You can also download the original data from [here](http://lincsportal.ccs.miami.edu/datasets/view/LDS-1530#downloaddataset).  
+
+## Cleaning my data  
+```{r, eval=TRUE}
+## Load the data  
+data_df <- read.table("data_sp_scaled.txt", sep="\t", stringsAsFactors=F, header=T)
+## and the covariate information
+metadata_df <- read.table("metadata.txt", sep="\t", stringsAsFactors=F, header=T)
+```
+
+As always, let us start by figuring out what we are working with. The `dim()` function prints the dimensions of a dataframe, and `head()` function shows the first 6 rows of a dataframe. You can also print only the row-count (or column-count) with the commands `nrow()` and `ncol()`.  
+The command `dim(data_df)` tells us that the data has `r dim(data_df)[1]` rows and `r dim(data_df)[2]` columns. Similarly, the row count and column count values for the metadata dataframe, `metadata_df`, are `r dim(metadata_df)`, respectively.  
+
+Notice that if we try to print the first 6 rows of `data_df`, the output is immense. Thus, instead of `head(data_df)`, we will print the first 6 rows, with the first 10 columns. We can select these columns with `data_df[,1:10]`.  
+
+```{r, eval=TRUE, echo=FALSE}
+kable(head(data_df[,1:10]), row.names=TRUE)
+```
+
+The column names correspond to genes, and the rows represent samples. These sample names correspond to the column `cl_id` in `metadata_df` (can you quickly verify this using `head`?).   
+More interestingly, we have some missing values in our data! Before we try and figure out a fix for this, let us calculate how many genes have missing values, or if the problem is only in a single sample.  
+R has a handy command, `complete.cases`, for checking if there are any rows containing missing values. It returns a TRUE/FALSE value for every row. We can summarize the results of this **list** in tabular form, using the function `table()`.  
+
+```{r, eval=FALSE, echo=TRUE}
+table(complete.cases(data_df))
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(table(complete.cases(data_df)))
+```
+
+
+It appears 5 samples have atleast 1 gene with a missing value. We can redo this test for the genes, after **transposing** our data. This is done using the function `t()`. 
+```{r, eval=FALSE, echo=TRUE}
+table(complete.cases(t(data_df)))
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(table(complete.cases(t(data_df))))
+```
+
+## Dealing with missing data  
+Over 50% of the genes across 5 samples are missing. We can deal with this either using imputation strategies, or by discarding the problematic samples. As imputation strategies are an entire discussion by themselves, we will into dive into them today (additional resources available at end of tutorial). Instead, we will take the easy way out and remove the samples with NAs. Good thing we have already covered a quick way to unselect these samples!.    
+
+```{r, eval=TRUE, echo=TRUE}
+data_df_clean <- data_df[complete.cases(data_df), ]
+```
+
+After this, we have `nrow(data_df_clean)` samples and `ncol(data_df_clean)` genes. We can do a quick 'smell-test' on this data, by using the dataframe function `summary()`. This function calculates summary statistics for each column in the dataframe. We can transpose the dataframe so that the samples become columns (instead of rows).  
+
+```{r, eval=FALSE, echo=TRUE}
+summary(t(data_df_clean))
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(summary(t(data_df_clean)))
+```
+
+Well, its still hard to read! Enter ggplot! However, we need to set up our data such that we can pass in a column with the sample name, and a column with the values being plotted.   
+
+For this, we will use the `melt` function from the **reshape2** package. The melt function is helpful in converting your data from the *long* to *wide* format. A similar function, `cast()`, can be used when you wish to calculate summary statistics on your data.     
+
+```{r, eval=TRUE, echo=TRUE}
+data_compact_df = melt(t(data_df_clean))
+colnames(data_compact_df) = c("Gene", "Sample", "Expression")
+```
+
+\pagebreak  
+
+## Dealing with outliers   
+ggplot has a handy geom_object (remember these from the ggplot tutorial?). The `stat_summary()` method allows us to plot a pointrange plot showing the mean and standard error.  
+
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
+## stat_summary() defaults to the categories defined on the x axis, and summarizes the numeric spread on the y-axis
+## We use coord_flip() to switch the categories to the y-axis, to improve readability
+ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary() + theme_bw(base_size=14) + coord_flip()
+```
+
+\pagebreak  
+
+However, we have an anomalous sample! The sample `PDX1328` has readings that lie extremely outside the range of the rest of the samples. We can see this more clearly with a boxplot version of the datapoints, plotted using `geom_boxplot()`
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
+ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
+```
+
+\pagebreak  
+
+We can remove the outlier sample using the following command (note that we are making changes to the samplxe x gene dataframe, not the melted version).      
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=8}
+data_df_clean2 = data_df_clean[!(rownames(data_df_clean) %in% c("PDX1328")), ]
+```
+
+Alright, so what does the data look like after that?  
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
+# First we melt our data
+data_compact_df = melt(t(data_df_clean2))
+colnames(data_compact_df) = c("Gene", "Sample", "Expression")
+# Then we plot it
+ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
+```
+
+\pagebreak  
+
+It looks like `PDX1258` has an outlier gene. We can easily print out the gene from our melted dataframe, with the command `data_compact_df[data_compact_df$Expression > 300, "Gene"]`. This returns `r data_compact_df[data_compact_df$Expression > 300, "Gene"]`. We can either remove this gene entirely, or replace it with the mean value. Sample metadata information can come in handy at this point. Let us see what information the metadata dataframe can provide:    
+```{r, eval=TRUE, echo=TRUE}
+kable(head(metadata_df))
+```
+
+`PDX1258` is a breast carcinoma. We can see the different disease categories by summarizing the contents of the column `cl_disease_detail`.  
+```{r, eval=FALSE, echo=TRUE}
+table(metadata_df$cl_disease_detail)
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(table(metadata_df$cl_disease_detail))
+```
+
+As there are 5 `breast carcinoma`s in this dataset, we can potentially set the value of PDX1258 to the average value of the gene in other breast carcinomas. If we connect our metadata with our expression data, it will be easy to select the gene and samples of interest. For this we use the `merge` function. Merging requires a column that has the same values in the 2 different dataframes we are joining. Note that we can specify the column using `by="shared column"` if the column has the same name in the 2 dataframes.   
+
+```{r, eval=TRUE, echo=TRUE}
+## Merge expression and metadata
+data_merged = merge(data_compact_df, metadata_df, by.x="Sample", by.y="cl_id")
+## Select PDX1258's outlier gene
+brca_tspan_df = data_merged[data_merged$Gene == "TSPAN6" & data_merged$cl_disease_detail == "breast carcinoma", ]
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(brca_tspan_df)
+```
+
+Notice that there are only 4 samples here, and CAL51 is similar to PDX1258 as both are epithelial-like cell lines. We can set the TSPAN6 value for PDX1258 the same as sample CAL51, or the average of the 3 breast carcinomas.  
+```{r, eval=TRUE, echo=TRUE}
+## Firstly we update data_df_clean2
+## Notice how we select the row with the sample name, and gene with the gene name
+data_df_clean2["PDX1258", "TSPAN6"] = mean(brca_tspan_df[brca_tspan_df$Sample != "PDX1258", "Expression"])
+## Then we recalculate the melted version of this dataframe
+data_compact_df = melt(t(data_df_clean2))
+colnames(data_compact_df) = c("Gene", "Sample", "Expression")
+```
+
+
+\pagebreak  
+
+
+# Comparing groups (and plotting the significance values)
+
+For the last bit, we will use an in-built dataset, `airquality`. You can laod it into your current environment by typing `data(airquality)`.  
+```{r, eval=TRUE, echo=TRUE}
+data(airquality)
+```
+```{r, eval=TRUE, echo=FALSE}
+kable(head(airquality))
+```
+
+We will use the package `ggpubr`. This package is quite similar to ggplot, but it has additional methods that make it easy to create publication-ready figures in R. One of these methods is `stat_compare_means()`.  
+
+```{r, eval=FALSE, echo=TRUE, fig.width=7, fig.height=4}
+ggplot(airquality[airquality$Month %in% c(5,6), ], aes(x=Month, y=Temp)) + geom_boxplot() + stat_compare_means() + theme_bw(base_size=14)
+```
+
+You have probably run into an error message as you run the code above.   
+Warning message: <span style="color:red"> Continuous x aesthetic -- did you forget aes(group=...)? </span>.  
+This is because the categories we are passing to perform the paired test for significance is numeric (hence 'continuous'). We can overcome this by treating the category column's values (Month) as strings. 
+
+```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=4}
+ggplot(airquality[airquality$Month %in% c(5,6), ], aes(x=as.character(Month), y=Temp)) + geom_boxplot() + stat_compare_means() + theme_bw(base_size=14)
+```
+
+- You can change the type of test that is performed. For example, try updating `stat_compare_means()` to `stat_compare_means(method="t.test")`  
+
+We can visualize the spread of data in the different categories using other geometric objects. A **violin plot** is an extension of a box-plot that shows the kernel density distributions of the data points, in addition to the median value and spread.  
+```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=4}
+ggplot(airquality[airquality$Month %in% c(5,6), ], aes(x=as.character(Month), y=Temp)) + geom_violin() + stat_compare_means() + theme_bw(base_size=14)
+```
+
+We can also extend the comparison to more than two groups. This, however, requires a bit of work. We first need to define the various pairwise comparisons we wish to perform. Subsequently we pass this list of comparisons to `stat_compare_means`.   
+
+```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=4}
+my_comparisons <- list( c("5", "6"), c("7", "8"), c("6", "8"), c("7", "9"))
+## Plot p-values for specified comparisons
+ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_point(alpha=0.5) + stat_compare_means(comparisons = my_comparisons, method="t.test") + theme_bw(base_size=14)
+```
+
+You can also calculate the significance of difference in means between all groups relative to a reference, like so:  
+```{r, eval=TRUE, echo=TRUE, fig.width=9, fig.height=4}
+ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_point(alpha=0.5) + stat_compare_means(method="t.test", ref.group = "5") + theme_bw(base_size=14)
+```
+
+\pagebreak  
+
+## ggpubr magic  
+ggpubr's methods `theme_pubclean` and `theme_pubr` shift the focus of your plot to your data.  
+```{r, eval=TRUE, echo=TRUE, fig.width=8, fig.height=4}
+my_comparisons <- list( c("5", "6"), c("7", "8"), c("6", "8"), c("7", "9"))
+
+ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_point(alpha=0.5) + stat_compare_means(comparisons = my_comparisons, method="t.test") + labs(x="Month", y="Temperature") + theme_pubclean(base_size=14)
+```
+
+\pagebreak  
+
+# Additional Resources  
+[Outlier detection with R](http://www.questionflow.org/2017/12/26/combined-outlier-detection-with-dplyr-and-ruler/)  
+[Detailed lecture on data cleanup with R](https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf)  
+[Using ggpubr to calculate significance](http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/76-add-p-values-and-significance-levels-to-ggplots/)  
+
+# Take-aways   
+1. Basic smell-tests on your data   
+2. Removing cases with missing data  
+3. Identifying outliers    
+4. Using ggpubr for descriptive statistics  
+5. Using ggpubr to create publication-ready figures   
+
+\pagebreak
+
+# Extra 
+
+## Pairs plots for expression data  
+Given a few samples (observations) with a large number of genes (variables), we can quickly evaluate if certain samples are outliers, simply by comparing the pair-wise scatterplots for all the samples
+```{r, eval=FALSE, echo=TRUE, fig.width=10, fig.height=6}
+## We can also plot pairwise scatterplots  
+brca_df = data_merged[data_merged$cl_disease_detail %in% c("normal", "breast medullary carcinoma"), ]
+## Reverse the melt step
+brca_df_recast = dcast(brca_df[,c("Sample", "Gene", "Expression")], Sample~Gene)
+rownames(brca_df_recast) = brca_df_recast$Sample; brca_df_recast$Sample <- NULL
+## Remove the outlier gene
+brca_df_recast = brca_df_recast[, !(colnames(brca_df_recast) %in% c("TSPAN6"))]
+pairs(t(brca_df_recast), panel = function(...) smoothScatter(..., add = TRUE))
+```
+
+## Filtering genes by average value or standard deviation  
+
+We firstly identify genes that vary within disease types. We will compare breast adenocarcinomas and breast ductal carcinomas.    
+```{r, eval=TRUE, echo=TRUE}
+## Select the samples from the metadata dataframe
+samples_brca = metadata_df[metadata_df$cl_disease_detail %in% c("breast adenocarcinoma", "breast ductal carcinoma"), ]
+## Filter our dataframe based on this list  
+brca_cohorts_df = data_df_clean2[rownames(data_df_clean2) %in% samples_brca$cl_id, ]
+### Compare this dataframe to what you get with the following command
+brca_cohorts_testdf = data_df_clean2[samples_brca$cl_id, ]
+```
+
+We will do some filtering to identify the most variable genes. Bioconductor's package [genefilter](http://bioconductor.org/packages/release/bioc/html/genefilter.html) also has some of these pre-implemented.  
+```{r, eval=TRUE, echo=TRUE}
+# Calculate mean of each gene
+avg_genes = sapply(brca_cohorts_df, mean)
+# Calculate standard deviation of each gene
+sd_genes = sapply(brca_cohorts_df, sd)
+# Filter dataframe based on an SD threshold of your choosing
+brca_cohorts_filt = brca_cohorts_df[ , names(sd_genes[sd_genes == max(sd_genes)]), drop=FALSE]
+brca_cohorts_filt$cl_id = rownames(brca_cohorts_filt); brca_cohorts_filt = merge(brca_cohorts_filt, metadata_df)
+
+ggplot(brca_cohorts_filt, aes(x=cl_disease_detail, y=TFF1)) + geom_boxplot() + theme_bw(base_size=16) + stat_compare_means(method = "t.test")
+```
