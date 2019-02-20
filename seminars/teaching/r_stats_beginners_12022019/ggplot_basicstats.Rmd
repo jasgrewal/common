@@ -3,14 +3,14 @@ title: "Data cleanup and summary statistics with R"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -121,7 +121,7 @@ ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary() + them
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary(fun.args = list(mult = 1)) + theme_bw(base_size=14) + coord_flip()
 ```
 
-**Segue**:  Another ggplot method is `stat_smooth()` (or `geom_smooth()`). This is helpful for plotting a line of best fit on your data. When you may want to compare this with a standard straight line, `geom_abline` is (quite helpful)[https://www.rdocumentation.org/packages/ggplot2/versions/1.0.1/topics/geom_abline].   
+**Segue**:  Another ggplot method is `stat_smooth()` (or `geom_smooth()`). This is helpful for plotting a line of best fit on your data. When you may want to compare this with a standard straight line, `geom_abline` is [quite helpful](https://www.rdocumentation.org/packages/ggplot2/versions/1.0.1/topics/geom_abline).   
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=4, fig.height=4}
 ## geom_point to visualize the scatterplot  
@@ -132,7 +132,7 @@ ggplot(data_df_clean, aes(x = BRCA1, y = PIK3CA)) + geom_point() + stat_smooth()
 
 \pagebreak  
 
-Looking back at our stat_summary figure, we have an anomalous sample! The sample `PDX1328` has readings that lie extremely outside the range of the rest of the samples. We can see this more clearly with a boxplot version of the datapoints, plotted using `geom_boxplot()`.  
+**End of Segue**: Looking back at our stat_summary figure, we have an anomalous sample! The sample `PDX1328` has readings that lie extremely outside the range of the rest of the samples. We can see this more clearly with a boxplot version of the datapoints, plotted using `geom_boxplot()`.  
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=7}
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
 ```
@@ -156,16 +156,21 @@ ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + them
 \pagebreak  
 
 It looks like `PDX1258` has an outlier gene. We can easily print out the gene from our melted dataframe, with the command `data_compact_df[data_compact_df$Expression > 300, "Gene"]`. This returns `r data_compact_df[data_compact_df$Expression > 300, "Gene"]`. We can either remove this gene entirely, or replace it with the mean value. Sample metadata information can come in handy at this point. Let us see what information the metadata dataframe can provide:    
-```{r, eval=TRUE, echo=TRUE}
-kable(head(metadata_df))
+```{r, eval=FALSE, echo=TRUE}
+print(metadata_df)
 ```
 
-`PDX1258` is a breast carcinoma. We can see the different disease categories by summarizing the contents of the column `cl_disease_detail`.  
+```{r, eval=TRUE, echo=FALSE}
+kable(metadata_df)
+```
+
+`PDX1258` is a breast carcinoma. We can see the different disease categories by summarizing the contents of the column `cl_disease_detail`.  We can also sort the table while we are at it....  
+
 ```{r, eval=FALSE, echo=TRUE}
-table(metadata_df$cl_disease_detail)
+sort(table(metadata_df$cl_disease_detail))
 ```
 ```{r, eval=TRUE, echo=FALSE}
-kable(table(metadata_df$cl_disease_detail))
+kable(sort(table(metadata_df$cl_disease_detail)))
 ```
 
 As there are 5 `breast carcinoma`s in this dataset, we can potentially set the value of PDX1258 to the average value of the gene in other breast carcinomas. If we connect our metadata with our expression data, it will be easy to select the gene and samples of interest. For this we use the `merge` function. Merging requires a column that has the same values in the 2 different dataframes we are joining. Note that we can specify the column using `by="shared column"` if the column has the same name in the 2 dataframes.   
@@ -196,7 +201,7 @@ colnames(data_compact_df) = c("Gene", "Sample", "Expression")
 
 # Comparing groups (and plotting the significance values)
 
-For the last bit, we will use an in-built dataset, `airquality`. You can laod it into your current environment by typing `data(airquality)`.  
+For the last bit, we will use an in-built dataset, `airquality`. You can load it into your current environment by typing `data(airquality)`.  
 ```{r, eval=TRUE, echo=TRUE}
 data(airquality)
 ```
@@ -212,7 +217,7 @@ ggplot(airquality[airquality$Month %in% c(5,6), ], aes(x=Month, y=Temp)) + geom_
 
 You have probably run into an error message as you run the code above.   
 Warning message: <span style="color:red"> Continuous x aesthetic -- did you forget aes(group=...)? </span>.  
-This is because the categories we are passing to perform the paired test for significance is numeric (hence 'continuous'). We can overcome this by treating the category column's values (Month) as strings. 
+This is because the categories we are passing to perform the paired test for significance are numeric (hence 'continuous'). We can overcome this by treating the category column's values (`Month`) as strings. 
 
 ```{r, eval=TRUE, echo=TRUE, fig.width=7, fig.height=4}
 ggplot(airquality[airquality$Month %in% c(5,6), ], aes(x=as.character(Month), y=Temp)) + geom_boxplot() + stat_compare_means() + theme_bw(base_size=14)
