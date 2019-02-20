@@ -3,14 +3,14 @@ title: "Data cleanup and summary statistics with R"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -70,7 +70,6 @@ table(complete.cases(data_df))
 kable(table(complete.cases(data_df)))
 ```
 
-
 It appears 5 samples have atleast 1 gene with a missing value. We can redo this test for the genes, after **transposing** our data. This is done using the function `t()`. 
 ```{r, eval=FALSE, echo=TRUE}
 table(complete.cases(t(data_df)))
@@ -85,6 +84,8 @@ Over 50% of the genes across 5 samples are missing. We can deal with this either
 ```{r, eval=TRUE, echo=TRUE}
 data_df_clean <- data_df[complete.cases(data_df), ]
 ```
+
+> If you were perusing the previous tutorial, you would have noticed us using `na.omit` to find rows in a dataframe that contain any NA value (in any column). These two commands are functionally the same, but complete.cases can be used on a subset of columns instead of the entire dataframe as well. For example, if we wanted only to remove the samples where 1 or more of certain genes were missing, we could have chosen them with data_df[complete.cases(data_df[,c("myFavGene1", "myFavGene2",....,"myfavGeneN")])]
 
 After this, we have `r nrow(data_df_clean)` samples and `r ncol(data_df_clean)` genes. We can do a quick 'smell-test' on this data, by using the dataframe function `summary()`. This function calculates summary statistics for each column in the dataframe. We can transpose the dataframe so that the samples become columns (instead of rows).  
 
