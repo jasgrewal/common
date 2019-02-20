@@ -1,9 +1,11 @@
 # Contents  
 ## Tutorials  
-- 12th February, 2019 : [Basic statistics, data cleanup, and p-values on your plots - beginner/intermediate tutorial](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.html)  
+- 21st February, 2019 (**rescheduled from the 12th!**) : 
+[Basic statistics, data cleanup, and p-values on your plots - beginner/intermediate tutorial](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.html)  
 	- [PDF](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.pdf)  
 	- [R Script](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.R)  
-	- Supporting [data](seminars/teaching/r_stats_beginners_12022019/data_sp_scaled.txt) and [metadata](seminars/teaching/r_stats_beginners_12022019/metadata.txt)  
+	- Supporting [data](seminars/teaching/r_stats_beginners_12022019/data_sp_scaled.txt) and [metadata](seminars/teaching/r_stats_beginners_12022019/metadata.txt) 
+	Please note that this seminar is being held at 12 PM (noon), at the BCCRC Diamond Family Theatre  
 - 23rd May, 2018 : [Modifying ggplot objects - intermediate tutorial](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.html)  
 	- [PDF](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.pdf)  
 	- [R Script](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.R)  
