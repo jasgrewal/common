@@ -3,14 +3,14 @@ title: "Data cleanup and summary statistics with R"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -80,7 +80,7 @@ kable(table(complete.cases(t(data_df))))
 ```
 
 ## Dealing with missing data  
-Over 50% of the genes across 5 samples are missing. We can deal with this either using imputation strategies, or by discarding the problematic samples. As imputation strategies are an entire discussion by themselves, we will into dive into them today (additional resources available at end of tutorial). Instead, we will take the easy way out and remove the samples with NAs. Good thing we have already covered a quick way to unselect these samples!.    
+Over 50% of the genes across 5 samples are missing. We can deal with this either using imputation strategies, or by discarding the problematic samples. As imputation strategies are an entire discussion by themselves, we will *not* into dive into them today (additional resources available at end of tutorial). Instead, we will take the easy way out and remove the samples with NAs. Good thing we have already covered a quick way to unselect these samples!.    
 
 ```{r, eval=TRUE, echo=TRUE}
 data_df_clean <- data_df[complete.cases(data_df), ]
