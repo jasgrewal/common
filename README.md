@@ -5,6 +5,7 @@
 	- [PDF](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.pdf)  
 	- [R Script](seminars/teaching/r_stats_beginners_12022019/ggplot_basicstats.R)  
 	- Supporting [data](seminars/teaching/r_stats_beginners_12022019/data_sp_scaled.txt) and [metadata](seminars/teaching/r_stats_beginners_12022019/metadata.txt) 
+	- Presentation [slides](https://goo.gl/TcJa2F)  
 
 Please note that this seminar is being held at 12 PM (noon), at the BCCRC Diamond Family Theatre  
 - 23rd May, 2018 : [Modifying ggplot objects - intermediate tutorial](seminars/teaching/r_ggplot2_intermediate_23052018/ggplot_themes-panels.html)  
