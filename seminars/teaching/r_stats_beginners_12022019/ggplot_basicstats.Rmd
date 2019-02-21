@@ -3,14 +3,14 @@ title: "Data cleanup and summary statistics with R"
 author: "Jasleen Grewal"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     latex_engine: xelatex
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 header-includes: \usepackage{color}
 ---
 
@@ -146,9 +146,26 @@ ggplot(data_df_clean, aes(x = BRCA1, y = PIK3CA)) + geom_point() + stat_smooth()
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
 ```
 
+Outliers come in many different flavors. There can be single datapoints (point outliers), noise in the data (contextual outliers), and an entire divergence in the observed values (collective outliers). In this case, we have a point outlier, which is lying far away from the rest of the observations. It may possibly have arisen from measurement or data entry errors.     
+
+Could we have made this detection analytical? We can calculate the Z-score of each observation. A Z-score is a standardized score, which tells you how many standard deviations away from the mean a data-point is. We can calculate the score using the `scale` function, which is applied to each column by default.  
+
+```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=8}
+z_data = scale(data_df_clean, center = TRUE, scale = TRUE)
+z_data_avgSample = rowMeans(z_data)
+```
+
+Let us see which sample has the maximum z-score.  
+```{r, eval=FALSE, echo=TRUE, fig.width=6, fig.height=8}
+print(sort(z_data_avgSample))
+```
+```{r, eval=TRUE, echo=FALSE, fig.width=6, fig.height=8}
+kable((sort(z_data_avgSample)))
+```
+
 \pagebreak  
 
-We can remove the outlier sample using the following command (note that we are making changes to the samplxe x gene dataframe, not the melted version). For the sake of this tutorial, we have already decided that this is a **technical outlier**, whereby the readings themselves are in an entirely different range from the rest of the data. Had it been a biological outlier, you may want to keep it in your data!       
+We can remove the outlier sample using the following command (note that we are making changes to the sample x gene dataframe, not the melted version).       
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=8}
 data_df_clean2 = data_df_clean[!(rownames(data_df_clean) %in% c("PDX1328")), ]
 ```
@@ -162,7 +179,7 @@ colnames(data_compact_df) = c("Gene", "Sample", "Expression")
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
 ```
 
-> Also note that while this was easy to do for a small set of samples, you may not be able to visually identify outliers in large datasets. One handy approach in that case is to generate PCA decompositions of your data, and plot the first 2 principal components. If you see a sample sitting further away from the rest, that's an outlier! There are also more sophisticated approaches for dealing with outliers, [explained nicely at this blogpost](https://datascienceplus.com/outlier-detection-and-treatment-with-r/)   
+> Also note that while this was easy to do for a small set of samples, you may not be able to visually identify outliers in large datasets. You can calculate z-scores for each sample, and identify samples that lie a few deviations away. You can generate PCA decompositions of your data, and plot the first 2 principal components. If you see a sample sitting further away from the rest, that's an outlier! There are also more sophisticated approaches for dealing with outliers, [explained nicely at this blogpost](https://datascienceplus.com/outlier-detection-and-treatment-with-r/)   
 
 \pagebreak  
 
@@ -268,7 +285,8 @@ ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_po
 
 # Additional Resources  
 [Understanding reshape2, wide and long formats](https://seananderson.ca/2013/10/19/reshape/)  
-[Outlier detection with R](http://www.questionflow.org/2017/12/26/combined-outlier-detection-with-dplyr-and-ruler/)  
+[Outlier detection with R](http://www.questionflow.org/2017/12/26/combined-outlier-detection-with-dplyr-and-ruler/)   
+[Understanding Outliers and their relevance](https://towardsdatascience.com/a-brief-overview-of-outlier-detection-techniques-1e0b2c19e561)
 [Detailed lecture on data cleanup with R](https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf)  
 [Using ggpubr to calculate significance](http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/76-add-p-values-and-significance-levels-to-ggplots/)  
 
