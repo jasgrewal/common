@@ -60,7 +60,16 @@ kable(head(data_df[,1:10]), row.names=TRUE)
 ```
 
 The column names correspond to genes, and the rows represent samples. These sample names correspond to the column `cl_id` in `metadata_df` (can you quickly verify this using `head`?).   
-More interestingly, we have some missing values in our data! Before we try and figure out a fix for this, let us calculate how many genes have missing values, or if the problem is only in a single sample.  
+
+We can also quickly ensure we don't have random unexpected values (such as characters or alphabets where we expect numbers) using the query `is.numeric`. You can quickly check what this function does, by entering `?is.numeric` in your R prompt.  
+
+```{r, eval=TRUE, echo=TRUE}
+table(sapply(data_df, is.numeric))
+```
+
+Looks like all our columns are numeric!  
+
+Take a quick look at the output from the `head()` function a couple of lines ago. It looks like we have some missing values in our data! Before we try and figure out a fix for this, let us calculate how many genes have missing values, or if the problem is only in a single sample.  
 R has a handy command, `complete.cases`, for checking if there are any rows containing missing values. It returns a TRUE/FALSE value for every row. We can summarize the results of this **list** in tabular form, using the function `table()`.  
 
 ```{r, eval=FALSE, echo=TRUE}
@@ -85,7 +94,7 @@ Over 50% of the genes across 5 samples are missing. We can deal with this either
 data_df_clean <- data_df[complete.cases(data_df), ]
 ```
 
-> If you were perusing the previous tutorial, you would have noticed us using `na.omit` to find rows in a dataframe that contain any NA value (in any column). These two commands are functionally the same, but complete.cases can be used on a subset of columns instead of the entire dataframe as well. For example, if we wanted only to remove the samples where 1 or more of certain genes were missing, we could have chosen them with data_df[complete.cases(data_df[,c("myFavGene1", "myFavGene2",....,"myfavGeneN")])]
+> If you were perusing the previous tutorial, you would have noticed us using `na.omit` to find rows in a dataframe that contain any NA value (in any column). These two commands are functionally the same, but complete.cases can be used on a subset of columns instead of the entire dataframe as well. For example, if we wanted only to remove the samples where 1 or more of certain genes were missing, we could have chosen them with data_df[complete.cases(data_df[,c("myFavGene1", "myFavGene2",....,"myfavGeneN")]), ]. Don't forget the comma after the row-selection!  
 
 After this, we have `r nrow(data_df_clean)` samples and `r ncol(data_df_clean)` genes. We can do a quick 'smell-test' on this data, by using the dataframe function `summary()`. This function calculates summary statistics for each column in the dataframe. We can transpose the dataframe so that the samples become columns (instead of rows).  
 
@@ -116,7 +125,6 @@ ggplot has a handy geom_object (remember these from the ggplot tutorial?) for su
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary() + theme_bw(base_size=14) + coord_flip()
 ```
 
-
 ```{r, eval=FALSE, echo=TRUE}
 ## stat_summary with 1 Standard Deviation around mean
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + stat_summary(fun.args = list(mult = 1)) + theme_bw(base_size=14) + coord_flip()
@@ -140,7 +148,7 @@ ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + them
 
 \pagebreak  
 
-We can remove the outlier sample using the following command (note that we are making changes to the samplxe x gene dataframe, not the melted version).      
+We can remove the outlier sample using the following command (note that we are making changes to the samplxe x gene dataframe, not the melted version). For the sake of this tutorial, we have already decided that this is a **technical outlier**, whereby the readings themselves are in an entirely different range from the rest of the data. Had it been a biological outlier, you may want to keep it in your data!       
 ```{r, eval=TRUE, echo=TRUE, fig.width=6, fig.height=8}
 data_df_clean2 = data_df_clean[!(rownames(data_df_clean) %in% c("PDX1328")), ]
 ```
@@ -153,6 +161,8 @@ colnames(data_compact_df) = c("Gene", "Sample", "Expression")
 # Then we plot it
 ggplot(data_compact_df, aes(x = Sample, y = Expression)) + geom_boxplot() + theme_bw(base_size=14) + coord_flip()
 ```
+
+> Also note that while this was easy to do for a small set of samples, you may not be able to visually identify outliers in large datasets. One handy approach in that case is to generate PCA decompositions of your data, and plot the first 2 principal components. If you see a sample sitting further away from the rest, that's an outlier! There are also more sophisticated approaches for dealing with outliers, [explained nicely at this blogpost](https://datascienceplus.com/outlier-detection-and-treatment-with-r/)   
 
 \pagebreak  
 
@@ -265,8 +275,8 @@ ggplot(airquality, aes(x=as.character(Month), y=Temp)) + geom_violin() + geom_po
 # Take-aways   
 1. Basic smell-tests on your data   
 2. Removing cases with missing data  
-3. Identifying outliers    
-4. Using ggpubr for descriptive statistics  
+3. Identifying outliers 
+4. Descriptive statistics
 5. Using ggpubr to create publication-ready figures   
 
 \pagebreak
