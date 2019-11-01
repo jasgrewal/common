@@ -1,4 +1,4 @@
-#Introduction
+# Introduction  
 Professor Matthew Farrer
 
 In Trisomy 21, the event of chromosome 21 duplication can occur in meiosis 1, or duplication + no separation in meiosis 2. Either of these will have separate influence on the outcome/prognosis.  
@@ -7,7 +7,7 @@ Cannot do imaging for Lewy bodies yet. Can identify dopamine loss, amyloid accru
 
 **UPSIT test** is corrected for ethnicity, booklet of 30 scratch-and-sniffs  
 
-#Parkinson's disease
+# Parkinson's disease
 - Asymmetric condition that becomes symmetric over disease progression
 - Neuromelanin
 - Classified as a motor disorder but it's more than that
@@ -39,11 +39,11 @@ Cannot do imaging for Lewy bodies yet. Can identify dopamine loss, amyloid accru
 			- Symptoms could be constipation, fatigue, personal response varies to these as well, so....
 		- *In case of the Ashk. vs NY Jews comparison*, is the subjective assessment of age of onset a confounder? 
 
-###Controversial research? 
+### Controversial research? 
 - Fighting over patients
 	- Lytico boding of Guam
 
-###Paper notes
+### Paper notes
 - 23AndMe had 20 cases and 20 controls
 
 
